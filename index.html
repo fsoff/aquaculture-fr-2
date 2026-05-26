@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Aquaculture française en chiffres</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:transparent}
+body{font-family:'DM Sans',sans-serif;display:flex;justify-content:center;}
+:root{--coral:#ef7657;--blue:#7e96cf;--navy:#4e4a86;}
+
+#wrap{position:relative;width:100%;max-width:1200px;margin:0 auto;}
+#map-img{display:block;width:100%;height:auto;user-select:none;pointer-events:none;}
+
+/* HOTSPOTS — CSS pur, left/top = centre du cercle */
+.hotspot{
+  position:absolute;
+  border-radius:0;
+  cursor:pointer;
+  background:transparent;
+  border:none;
+  z-index:10;
+  transform:translate(-50%,-50%);
+  width:14%;
+  aspect-ratio:auto;
+  padding:0;
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  transition:filter .15s, transform .15s;
+}
+.hotspot:hover{
+  filter:brightness(1.08);
+  transform:translate(-50%,-50%) scale(1.03);
+}
+.hotspot.active{
+  filter:brightness(0.88);
+  transform:translate(-50%,-50%) scale(1.03);
+}
+/* PNG spécifique — boutons carrés avec label */
+#hs-ventes      {background-image:url('ventes-clik.png');      width:14%;aspect-ratio:1/1;}
+#hs-production  {background-image:url('prod-click.png');        width:14%;aspect-ratio:1/1;}
+#hs-emploi      {background-image:url('emploi-click.png');      width:14%;aspect-ratio:1/1;}
+#hs-localisation{background-image:url('localisation-click.png');width:14%;aspect-ratio:1/1;}
+#hs-evolution   {background-image:url('evolution-click.png');   width:14%;aspect-ratio:1/1;}
+#hs-risques     {background-image:url('risques-click.png');     width:14%;aspect-ratio:1/1;}
+
+/* espacement égal 20px entre boutons */
+#hs-ventes      {left:10.3%;top:15.2%;}
+#hs-production  {left:10.3%;top:37.7%;}
+#hs-emploi      {left:10.3%;top:60.2%;}
+#hs-localisation{left:89.1%;top:15.2%;}
+#hs-evolution   {left:89.1%;top:37.7%;}
+#hs-risques     {left:89.1%;top:60.2%;}
+
+/* FAÇADE */
+#btn-facade{
+  position:absolute;
+  left:10.3%;
+  top:76.0%;
+  transform:translate(-50%,-50%);
+  width:14%;
+  height:auto;
+  background:none;
+  border:none;
+  outline:none;
+  cursor:pointer;
+  z-index:20;
+  padding:0;
+  display:block;
+  transition:filter .15s, transform .15s;
+}
+#btn-facade img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+#btn-facade:hover{filter:brightness(1.08);transform:translate(-50%,-50%) scale(1.03);}
+
+/* OVERLAY */
+#overlay{
+  position:absolute;inset:0;z-index:30;
+  pointer-events:none;opacity:0;transition:opacity .22s;
+  background:rgba(78,74,134,0.08);
+}
+#overlay.open{opacity:1;pointer-events:all;}
+
+/* MODALE */
+#modal{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(.96);
+  /* stay inside map: left edge clears left buttons, right edge clears right buttons */
+  width:56%;
+  max-height:80%;
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
+  border-radius:18px;
+  padding:24px 28px 20px;
+  border:1px solid rgba(126,150,207,.15);
+  transition:transform .22s;
+  overflow-y:auto;
+  /* never overflow wrap */
+  box-sizing:border-box;
+}
+#overlay.open #modal{transform:translate(-50%,-50%) scale(1);}
+
+.m-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:3px;}
+.m-sub{font-size:11px;color:#aaa;font-weight:300;margin-bottom:13px;}
+.m-bar{height:2px;background:linear-gradient(90deg,var(--coral),var(--blue),transparent);border-radius:2px;margin-bottom:18px;}
+.src{font-size:10px;color:#bbb;font-style:italic;margin-top:14px;}
+.etp-note{font-size:10px;color:#888;background:rgba(126,150,207,.1);border-radius:6px;padding:8px 10px;margin-bottom:14px;line-height:1.5;}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;}
+.kpi{background:rgba(78,74,134,.07);border-left:3px solid var(--coral);border-radius:8px;padding:11px 13px;}
+.kv{font-size:21px;font-weight:600;color:var(--navy);line-height:1;}
+.kl{font-size:10px;color:#888;margin-top:3px;}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:12px;margin-top:6px;}
+.pb{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.pb-block{width:64px;border-radius:6px 6px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 4px;}
+.pb-name{font-size:10px;color:#666;text-align:center;}
+
+/* PRODUCTION barres pictos */
+.prod-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.prod-lbl{width:90px;flex-shrink:0;text-align:right;}
+.prod-lbl b{font-size:10px;font-weight:600;color:var(--navy);display:block;}
+.prod-lbl span{font-size:9px;color:#aaa;}
+.prod-scroll{flex:1;}
+.prod-pics{display:flex;flex-wrap:wrap;gap:2px;align-items:center;padding:2px 0 4px;}
+.prod-pics img{height:30px;width:auto;flex-shrink:0;display:block;}
+
+/* BUBBLE EMPLOI */
+.bubble-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.bubble-card{background:rgba(78,74,134,.06);border-radius:10px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.bubble-circle{border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:7px;flex-shrink:0;}
+.bubble-name{font-size:10px;font-weight:600;color:var(--navy);margin-bottom:2px;}
+.bubble-ent{font-size:9px;color:#aaa;}
+.bubble-f{font-size:9px;color:var(--coral);margin-top:2px;}
+.bubble-note{font-size:9px;color:#bbb;text-align:center;margin-top:10px;font-style:italic;}
+
+/* SPIDER */
+.spider-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.spider-card{background:rgba(78,74,134,.05);border-radius:10px;padding:10px 8px 8px;display:flex;flex-direction:column;align-items:center;}
+.spider-name{font-size:9.5px;font-weight:600;color:var(--navy);text-align:center;margin-bottom:4px;line-height:1.2;}
+.spider-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px 4px;margin-top:6px;width:100%;}
+.spider-stat{display:flex;align-items:center;gap:3px;font-size:8px;}
+
+/* LOCALISATION */
+.loc-wrap{position:relative;width:100%;border-radius:10px;overflow:hidden;}
+.loc-wrap img{width:100%;display:block;}
+.loc-dot{
+  position:absolute;border-radius:50%;
+  transform:translate(-50%,-50%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:700;color:#fff;
+  border:2px solid rgba(255,255,255,.85);
+  transition:transform .15s;
+}
+.loc-dot:hover{transform:translate(-50%,-50%) scale(1.14);}
+.loc-lbl{
+  position:absolute;transform:translate(-50%,0);
+  font-size:8px;font-weight:500;color:var(--navy);
+  background:rgba(255,255,255,.88);padding:1px 5px;border-radius:3px;
+  white-space:nowrap;pointer-events:none;
+}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+  <img id="map-img" src="info-france1.png" alt="Carte aquaculture France">
+
+  <button class="hotspot" id="hs-ventes"       onclick="open_modal('ventes')"       aria-label="Ventes"></button>
+  <button class="hotspot" id="hs-production"   onclick="open_modal('production')"   aria-label="Production"></button>
+  <button class="hotspot" id="hs-emploi"       onclick="open_modal('emploi')"       aria-label="Emploi"></button>
+  <button class="hotspot" id="hs-localisation" onclick="open_modal('localisation')" aria-label="Localisation"></button>
+  <button class="hotspot" id="hs-evolution"    onclick="open_modal('evolution')"    aria-label="Évolution"></button>
+  <button class="hotspot" id="hs-risques"      onclick="open_modal('risques')"      aria-label="Risques"></button>
+  <button id="btn-facade" onclick="alert('Infographie façades — à venir')" aria-label="Les chiffres par façade"><img src="Fac_ade.png" alt="Les chiffres par façade"></button>
+
+  <!-- KPIs + Aperçu au centre -->
+  <div id="kpi-overlay" style="
+    position:absolute;
+    left:50%;top:48%;
+    transform:translate(-50%,-50%);
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
+    z-index:9;
+    pointer-events:none;
+  ">
+    <div style="display:flex;gap:40px;align-items:baseline;">
+      <div style="text-align:center;">
+        <div id="kpi-tonnes" style="
+          font-family:'DM Sans',sans-serif;
+          font-size:clamp(36px,4.5vw,64px);
+          font-weight:700;color:#4e4a86;line-height:1;
+          text-shadow:0 2px 8px rgba(255,255,255,0.9);
+        ">0 t</div>
+        <div style="font-size:clamp(10px,1.1vw,14px);color:#7e96cf;font-weight:400;margin-top:4px;">volume produit</div>
+      </div>
+      <div style="width:1px;height:40px;background:rgba(126,150,207,0.4);align-self:center;"></div>
+      <div style="text-align:center;">
+        <div id="kpi-euros" style="
+          font-family:'DM Sans',sans-serif;
+          font-size:clamp(36px,4.5vw,64px);
+          font-weight:700;color:#4e4a86;line-height:1;
+          text-shadow:0 2px 8px rgba(255,255,255,0.9);
+        ">0 M€</div>
+        <div style="font-size:clamp(10px,1.1vw,14px);color:#7e96cf;font-weight:400;margin-top:4px;">valeur des ventes</div>
+      </div>
+    </div>
+    <div id="kpi-year" style="
+      font-family:'DM Sans',sans-serif;
+      font-size:clamp(16px,1.8vw,26px);
+      color:#ef7657;font-weight:600;
+      margin-top:10px;opacity:0;
+      transition:opacity 1s ease;
+      letter-spacing:0.08em;
+    ">en 2024</div>
+  </div>
+
+    <!-- Aperçu : élément indépendant, HORS du kpi-overlay -->
+  <button id="btn-apercu" style="
+    position:absolute;
+    left:50%;
+    top:58%;
+    transform:translateX(-50%);
+    opacity:0;
+    pointer-events:none;
+    background:transparent;
+    border:none;
+    padding:0;
+    cursor:pointer;
+    z-index:9;
+    transition:opacity 0.8s ease;
+    display:block;
+  "><img src="ape-u.png" style="height:clamp(90px,10vw,120px);width:auto;display:block;" alt="Aperçu"></button>
+
+  <div id="overlay" onclick="handle_overlay(event)">
+    <div id="modal">
+      <div class="m-title" id="m-title"></div>
+      <div class="m-sub"   id="m-sub"></div>
+      <div class="m-bar"></div>
+      <div id="m-content"></div>
+    </div>
+  </div>
+
+</div>
+<script>
+let active=null;
+
+function open_modal(key){
+  if(active===key){close_modal();return;}
+  // désactiver l'ancien bouton si il a un hotspot
+  if(active){
+    const prev=document.getElementById('hs-'+active);
+    if(prev) prev.classList.remove('active');
+  }
+  active=key;
+  // activer le hotspot si il existe (pas pour 'apercu')
+  const hs=document.getElementById('hs-'+key);
+  if(hs) hs.classList.add('active');
+  const cfg=MODALS[key];
+  if(!cfg) return;
+  document.getElementById('m-title').textContent=cfg.title;
+  document.getElementById('m-sub').textContent=cfg.sub;
+  document.getElementById('m-content').innerHTML=cfg.render();
+  // position spéciale pour localisation
+  const modal=document.getElementById('modal');
+  if(key==='localisation'){
+    modal.style.top='2%';
+    modal.style.transform='translate(-50%,0) scale(1)';
+  } else {
+    modal.style.top='50%';
+    modal.style.transform='translate(-50%,-50%) scale(1)';
+  }
+  document.getElementById('overlay').classList.add('open');
+  if(cfg.after) requestAnimationFrame(()=>setTimeout(cfg.after,80));
+}
+function close_modal(){
+  document.getElementById('overlay').classList.remove('open');
+  const modal=document.getElementById('modal');
+  modal.style.top='50%';
+  modal.style.transform='translate(-50%,-50%) scale(.96)';
+  if(active){
+    const el=document.getElementById('hs-'+active);
+    if(el) el.classList.remove('active');
+    active=null;
+  }
+}
+function handle_overlay(e){
+  if(e.target===document.getElementById('overlay')) close_modal();
+}
+
+const MODALS={
+
+  ventes:{
+    title:"Ventes finales de l'aquaculture",
+    sub:'France — Agreste 2024',
+    render:()=>`
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kv">178 879 t</div><div class="kl">Volume total produit</div></div>
+        <div class="kpi"><div class="kv">870 M€</div><div class="kl">Valeur totale des ventes</div></div>
+        <div class="kpi"><div class="kv">3 143</div><div class="kl">Entreprises productrices</div></div>
+        <div class="kpi"><div class="kv">4,86 €/kg</div><div class="kl">Prix moyen toutes filières</div></div>
+      </div>
+      <div style="font-size:10px;font-weight:600;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Classement européen</div>
+      <div class="podium" style="gap:16px;align-items:flex-end;justify-content:center;margin-top:8px;">
+        <div class="pb">
+          <span style="font-size:15px">🥇</span>
+          <div class="pb-block" style="height:90px;background:#7e96cf;width:76px;">
+            <span style="font-size:24px">🇪🇸</span>
+            <span style="font-size:10px;color:#fff;font-weight:600;margin-top:2px;">Espagne</span>
+          </div>
+          <div class="pb-name" style="margin-top:4px;">1er</div>
+          <div style="font-size:10px;color:#7e96cf;font-weight:500;margin-top:2px;">~313 kt</div>
+          <div style="font-size:9px;color:#aaa;">~630 M€</div>
+        </div>
+        <div class="pb">
+          <span style="font-size:15px">🥈</span>
+          <div class="pb-block" style="height:72px;background:#ef7657;width:76px;">
+            <span style="font-size:24px">🇫🇷</span>
+            <span style="font-size:10px;color:#fff;font-weight:600;margin-top:2px;">France</span>
+          </div>
+          <div class="pb-name" style="font-weight:700;color:var(--navy);margin-top:4px;">2e</div>
+          <div style="font-size:10px;color:#ef7657;font-weight:600;margin-top:2px;">178 kt</div>
+          <div style="font-size:9px;color:#aaa;">870 M€</div>
+        </div>
+        <div class="pb">
+          <span style="font-size:15px">🥉</span>
+          <div class="pb-block" style="height:56px;background:#b0bfe8;width:76px;">
+            <span style="font-size:24px">🇬🇧</span>
+            <span style="font-size:10px;color:#fff;font-weight:600;margin-top:2px;">Royaume-Uni</span>
+          </div>
+          <div class="pb-name" style="margin-top:4px;">3e</div>
+          <div style="font-size:10px;color:#9b94c8;font-weight:500;margin-top:2px;">~172 kt</div>
+          <div style="font-size:9px;color:#aaa;">~570 M€</div>
+        </div>
+      </div>
+      <p style="font-size:9px;color:#ccc;text-align:center;margin-top:8px;font-style:italic;">Données européennes : Eurostat 2022 (dernière année disponible)</p>
+      <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`
+  },
+
+  production:{
+    title:'Répartition de la production marine',
+    sub:'1 pictogramme = 5 000 t — 2024',
+    render:()=>{
+      const UNIT=5000;
+      const data=[
+        {l:'Huîtres',       kt:'81,4', v:81383, pic:'huitre-col.png'},
+        {l:'Moules',        kt:'48,8', v:48775, pic:'moule-col.png'},
+        {l:'Salmonidés',    kt:'33,3', v:33255, pic:'salmonide-col.png'},
+        {l:'Poissons mar.', kt:'6,6',  v:6619,  pic:'poisson-col.png'},
+        {l:'Algues',        kt:'0,7',  v:724,   pic:'algue-col.png'},
+      ];
+      return data.map(d=>{
+        const n=Math.max(1,Math.round(d.v/UNIT));
+        const imgs=Array.from({length:n},(_,i)=>{
+          const rem=d.v%UNIT;
+          const op=(i===n-1&&rem>200)?(rem/UNIT).toFixed(2):1;
+          return `<img src="${d.pic}" style="height:30px;width:auto;flex-shrink:0;opacity:${op};" alt="${d.l}">`;
+        }).join('');
+        return `<div class="prod-row">
+          <div class="prod-lbl"><b>${d.l}</b><span>${d.kt} kt</span></div>
+          <div class="prod-scroll"><div class="prod-pics">${imgs}</div></div>
+        </div>`;
+      }).join('')+
+      `<div style="font-size:9px;color:#bbb;text-align:right;margin-top:2px;font-style:italic;">1 pictogramme ≈ 5 000 t · scroll →</div>
+       <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`;
+    }
+  },
+
+  evolution:{
+    title:'Évolution des volumes 2023 → 2024',
+    sub:'Slopegraph par filière marine',
+    render:()=>`
+      <svg id="slope-svg" viewBox="0 0 460 260" style="width:100%;display:block;"></svg>
+      <p class="src">Source : Agreste — Enquêtes aquaculture 2023 & 2024</p>`,
+    after:()=>draw_slope()
+  },
+
+  emploi:{
+    title:'Emploi par filière',
+    sub:'Équivalents Temps Plein (ETP) — 2024',
+    render:()=>{
+      const data=[
+        {n:'Conchyliculture', ent:2320, etp:5836, f:26.5, c:'#4e4a86', sz:56},
+        {n:'Pisc. eau douce',  ent:334,  etp:983,  f:26.1, c:'#7e96cf', sz:36},
+        {n:'Algues & cyano',   ent:248,  etp:202,  f:38.2, c:'#2d9e6b', sz:26},
+        {n:'Pisc. marine',     ent:32,   etp:390,  f:16.4, c:'#ef7657', sz:32},
+        {n:'Pisc. étangs',     ent:209,  etp:166,  f:18.9, c:'#9b94c8', sz:22},
+      ];
+      const cards=data.map(d=>`
+        <div class="bubble-card">
+          <div class="bubble-circle" style="width:${d.sz}px;height:${d.sz}px;background:${d.c};">
+            <span style="font-size:${Math.max(9,d.sz/3.8)}px;font-weight:600;color:#fff;">
+              ${d.etp>999?(d.etp/1000).toFixed(1)+'k':d.etp}
+            </span>
+          </div>
+          <div class="bubble-name">${d.n}</div>
+          <div class="bubble-ent">${d.ent} entreprises</div>
+          <div class="bubble-f">${d.f}% femmes</div>
+        </div>`).join('');
+      return `
+        <div class="etp-note">
+          <strong style="color:var(--navy)">ETP</strong> — Équivalent Temps Plein : 1 ETP = 1 personne travaillant à temps plein sur une année complète.
+        </div>
+        <div class="bubble-grid">${cards}</div>
+        <div class="bubble-note">Taille des cercles proportionnelle aux ETP</div>
+        <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`;
+    }
+  },
+
+  risques:{
+    title:'Événements exceptionnels 2024',
+    sub:'Profil de risque par région conchylicole',
+    render:()=>{
+      const regions=[
+        {n:'Bretagne-Nord',  vals:[21.1,16.7,0,   0   ]},
+        {n:'Normandie',      vals:[13.9,12.7,1.7, 1.8 ]},
+        {n:'Bretagne-Sud',   vals:[1.7, 3.7, 1.1, 0.3 ]},
+        {n:'Pays de Loire',  vals:[1.2, 4.4, 4.4, 1.0 ]},
+        {n:'Char.-Maritime', vals:[3.6, 3.1, 1.3, 1.2 ]},
+        {n:'Arcachon',       vals:[4.2, 8.9, 6.2,16.4 ]},
+        {n:'Méditerranée',   vals:[10.9,3.1, 1.2, 3.3 ]},
+      ];
+      const LABELS=['Prédation','Climat','Virus','Mortalité'];
+      const SHORT=['Préd.','Clim.','Virus','Mort.'];
+      const COLS=['#ef7657','#7e96cf','#4e4a86','#9b94c8'];
+      const MX=25,R=36,SZ=104;
+      const ANG=Array.from({length:4},(_,i)=>-Math.PI/2+i*Math.PI/2);
+
+      function spider(vals){
+        const cx=SZ/2,cy=SZ/2;
+        let h='';
+        [.33,.66,1].forEach(f=>{
+          const pts=ANG.map(a=>`${cx+R*f*Math.cos(a)},${cy+R*f*Math.sin(a)}`).join(' ');
+          h+=`<polygon points="${pts}" fill="none" stroke="rgba(78,74,134,.18)" stroke-width=".6"/>`;
+        });
+        ANG.forEach((a,i)=>{
+          h+=`<line x1="${cx}" y1="${cy}" x2="${cx+R*Math.cos(a)}" y2="${cy+R*Math.sin(a)}" stroke="rgba(78,74,134,.18)" stroke-width=".6"/>`;
+          const lx=cx+(R+10)*Math.cos(a),ly=cy+(R+10)*Math.sin(a);
+          h+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="7" fill="${COLS[i]}" font-family="DM Sans,sans-serif" font-weight="500">${['Préd','Clim','Virus','Mort'][i]}</text>`;
+        });
+        const dpts=vals.map((v,i)=>{
+          const r=Math.min(v/MX,1)*R;
+          return `${cx+r*Math.cos(ANG[i])},${cy+r*Math.sin(ANG[i])}`;
+        }).join(' ');
+        h+=`<polygon points="${dpts}" fill="rgba(239,118,87,.28)" stroke="#ef7657" stroke-width="1.4"/>`;
+        vals.forEach((v,i)=>{
+          if(v>0){
+            const r=Math.min(v/MX,1)*R;
+            h+=`<circle cx="${cx+r*Math.cos(ANG[i])}" cy="${cy+r*Math.sin(ANG[i])}" r="2.2" fill="#ef7657"/>`;
+          }
+        });
+        return h;
+      }
+
+      const cards=regions.map(reg=>{
+        const stats=reg.vals.map((v,i)=>
+          `<div class="spider-stat">
+            <div style="width:6px;height:6px;border-radius:50%;background:${COLS[i]};flex-shrink:0;"></div>
+            <span style="color:#888;">${SHORT[i]}</span>
+            <span style="font-weight:600;color:${v>=10?COLS[i]:v>4?'#555':'#aaa'};">${v>0?v.toFixed(1)+'%':'—'}</span>
+          </div>`
+        ).join('');
+        return `<div class="spider-card">
+          <div class="spider-name">${reg.n}</div>
+          <svg viewBox="0 0 ${SZ} ${SZ}" width="${SZ}" height="${SZ}" style="overflow:visible;display:block;">${spider(reg.vals)}</svg>
+          <div class="spider-stats">${stats}</div>
+        </div>`;
+      }).join('');
+
+      return `<div class="spider-grid">${cards}</div>
+        <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`;
+    }
+  },
+
+  apercu:{
+    title:"L'aquaculture marine française",
+    sub:'Une filière diverse, du littoral à l\'assiette',
+    render:()=>`
+      <div style="display:flex;flex-direction:column;gap:14px;line-height:1.65;font-size:13px;color:#444;">
+        <p>L'aquaculture marine désigne l'ensemble des activités d'élevage dans l'eau salée, qu'il s'agisse d'animaux ou de végétaux.</p>
+        <div style="background:rgba(126,150,207,.08);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;">
+          <div style="font-size:11px;font-weight:600;color:var(--navy);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;">Les grandes filières</div>
+          <p>La <strong style="color:var(--navy)">pisciculture</strong> correspond à l'élevage de poissons (saumons, bars, daurades…), <strong style="color:var(--navy)">l'algoculture</strong> aux algues (kombu, wakamé, nori…), et la <strong style="color:var(--navy)">conchyliculture</strong> aux coquillages — notamment l'ostréiculture (huîtres) et la mytiliculture (moules), qui sont les activités les plus connues.</p>
+        </div>
+        <p>D'autres productions existent, comme l'élevage de crevettes en Nouvelle-Calédonie et Polynésie française, mais elles restent plus limitées.</p>
+        <div style="background:rgba(239,118,87,.08);border-left:3px solid var(--coral);border-radius:0 8px 8px 0;padding:10px 14px;">
+          <div style="font-size:11px;font-weight:600;color:var(--coral);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;">La France en Europe</div>
+          <p>En France, l'aquaculture marine est largement dominée par les coquillages — huîtres et moules représentent à elles seules <strong>environ les trois quarts</strong> de la production. La pisciculture marine constitue le deuxième grand secteur, avec un savoir-faire reconnu dans la reproduction et l'alimentation des poissons.</p>
+          <p style="margin-top:8px;">À l'échelle européenne, la France figure parmi les principaux producteurs, juste derrière l'Espagne, et compte parmi les premiers producteurs d'algues — une filière en expansion.</p>
+        </div>
+        <p style="color:#aaa;font-size:11px;font-style:italic;">Il existe de nombreuses autres activités très marginales, comme l'homariculture (homards) ou l'échinoculture (oursins).</p>
+      </div>
+      <p class="src">Source : Agreste — Enquête aquaculture 2024</p>
+      <div style="position:relative;height:140px;margin-top:-10px;pointer-events:none;">
+        <img src="travailleur.png" alt="Travailleur aquacole" style="
+          position:absolute;right:0;bottom:0;
+          height:130px;width:auto;
+          display:block;
+        ">
+      </div>`
+  },
+
+  localisation:{
+    title:"Concentration de l'emploi conchylicole",
+    sub:'ETP (Équivalents Temps Plein) par région — cercles proportionnels, 2024',
+    render:()=>{
+      const pts=[
+        {n:'Normandie–Mer du Nord',etp:1106,x:44, y:16,c:'#4e4a86'},
+        {n:'Bretagne-Nord',        etp:955, x:16, y:27,c:'#ef7657'},
+        {n:'Bretagne-Sud',         etp:716, x:18, y:40,c:'#7e96cf'},
+        {n:'Pays de la Loire',     etp:604, x:26, y:50,c:'#7e96cf'},
+        {n:'Charente-Maritime',    etp:1562,x:27, y:60,c:'#4e4a86'},
+        {n:'Arcachon–Aquitaine',   etp:320, x:26, y:70,c:'#9b94c8'},
+        {n:'Méditerranée',         etp:584, x:70, y:76,c:'#ef7657'},
+      ];
+      const mx=1562,minR=11,maxR=30;
+      return `<div class="loc-wrap">
+        <img src="Carte.png" alt="Carte France" style="opacity:.45;">
+        ${pts.map(p=>{
+          const r=minR+(p.etp/mx)*(maxR-minR);
+          return `
+            <div class="loc-dot" style="left:${p.x}%;top:${p.y}%;width:${r*2}px;height:${r*2}px;background:${p.c}cc;">
+              <span style="font-size:${Math.max(7,r/2.5)}px">${p.etp>999?(p.etp/1000).toFixed(1)+'k':p.etp}</span>
+            </div>
+            <div class="loc-lbl" style="left:${p.x}%;top:calc(${p.y}% + ${r+3}px);">${p.n}</div>`;
+        }).join('')}
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:10px;color:#888;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#4e4a8688;border:1.5px solid #4e4a86;flex-shrink:0"></div>
+        Taille proportionnelle aux ETP — max : 1 562 ETP (Charente-Maritime)
+      </div>
+      <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`;
+    }
+  }
+};
+
+/* ── ANIMATION KPIs AU CHARGEMENT ── */
+function animateCounter(el, target, duration, formatter){
+  const start=performance.now();
+  function step(now){
+    const p=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-p,3); // ease-out cubic
+    el.textContent=formatter(Math.round(ease*target));
+    if(p<1) requestAnimationFrame(step);
+    else {
+      el.textContent=formatter(target);
+      if(p>=1){ /* reveal handled by load listener */ }
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    animateCounter(
+      document.getElementById('kpi-tonnes'),
+      178879, 1800,
+      v=>v.toLocaleString('fr')+' t'
+    );
+    animateCounter(
+      document.getElementById('kpi-euros'),
+      870, 1800,
+      v=>v+' M€'
+    );
+  }, 400);
+
+  // "en 2024" + bouton Aperçu apparaissent après l'animation
+  setTimeout(()=>{
+    const yr = document.getElementById('kpi-year');
+    if(yr) yr.style.opacity='1';
+  }, 2400);
+
+  setTimeout(()=>{
+    const b = document.getElementById('btn-apercu');
+    if(b){
+      b.style.opacity='1';
+      b.style.pointerEvents='all';
+      b.addEventListener('click', ()=>open_modal('apercu'));
+    }
+  }, 3000);
+});
+
+function draw_slope(){
+  const svg=document.getElementById('slope-svg');
+  if(!svg) return;
+  const W=460,H=260,pad={l:120,r:110,t:32,b:16};
+  const x0=pad.l,x1=W-pad.r;
+  const data=[
+    {l:'Huîtres',      v23:90410,v24:81383,c:'#7e96cf'},
+    {l:'Moules',       v23:54531,v24:48775,c:'#4e4a86'},
+    {l:'Salmonidés',   v23:29313,v24:33246,c:'#ef7657'},
+    {l:'Poissons mar.',v23:5807, v24:6509, c:'#9b94c8'},
+    {l:'Algues',       v23:453,  v24:722,  c:'#2d9e6b'},
+  ];
+  const all=data.flatMap(d=>[d.v23,d.v24]);
+  const lMn=Math.log(Math.min(...all)),lMx=Math.log(Math.max(...all));
+  const scY=v=>pad.t+(H-pad.t-pad.b)*(1-(Math.log(v)-lMn)/(lMx-lMn));
+  const F="'DM Sans',sans-serif";
+  let h=`
+    <line x1="${x0}" y1="${pad.t}" x2="${x0}" y2="${H-pad.b}" stroke="#eee" stroke-width="1"/>
+    <line x1="${x1}" y1="${pad.t}" x2="${x1}" y2="${H-pad.b}" stroke="#eee" stroke-width="1"/>
+    <text x="${x0}" y="${pad.t-10}" font-size="11" fill="#ccc" text-anchor="middle" font-family="${F}">2023</text>
+    <text x="${x1}" y="${pad.t-10}" font-size="11" fill="#ccc" text-anchor="middle" font-family="${F}">2024</text>`;
+  data.forEach(d=>{
+    const y0=scY(d.v23),y1=scY(d.v24);
+    const pct=((d.v24-d.v23)/d.v23*100);
+    const sign=pct>=0?'+':'';
+    const pc=pct>=0?'#ef7657':'#7e96cf';
+    h+=`
+      <line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="${d.c}" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+      <circle cx="${x0}" cy="${y0}" r="3.5" fill="${d.c}"/>
+      <circle cx="${x1}" cy="${y1}" r="3.5" fill="${d.c}"/>
+      <text x="${x0-9}" y="${y0-5}" font-size="10" fill="${d.c}" text-anchor="end" font-family="${F}" font-weight="500">${d.l}</text>
+      <text x="${x0-9}" y="${y0+8}" font-size="9" fill="#ccc" text-anchor="end" font-family="${F}">${(d.v23/1000).toFixed(0)} kt</text>
+      <text x="${x1+9}" y="${y1-5}" font-size="11" fill="${pc}" text-anchor="start" font-family="${F}" font-weight="600">${sign}${pct.toFixed(0)}%</text>
+      <text x="${x1+9}" y="${y1+8}" font-size="9" fill="#ccc" text-anchor="start" font-family="${F}">${(d.v24/1000).toFixed(0)} kt</text>`;
+  });
+  svg.innerHTML=h;
+}
+</script>
+</body>
+</html>
