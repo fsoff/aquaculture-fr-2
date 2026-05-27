@@ -61,16 +61,55 @@ body{font-family:'DM Sans',sans-serif;display:block;}
   left:10.3%;
   top:76.0%;
   transform:translate(-50%,-50%);
-  width:10%;
+  width:auto;
   height:auto;
-  background:none;
+  background:rgba(78,74,134,0.85);
   border:none;
+  border-radius:10px;
   outline:none;
   cursor:pointer;
   z-index:20;
-  padding:0;
+  padding:8px 14px;
   display:block;
-  transition:filter .15s, transform .15s;
+  color:white;
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(11px,1vw,14px);
+  font-weight:600;
+  line-height:1.3;
+  transition:background .2s, transform .15s;
+  white-space:nowrap;
+  text-align:center;
+}
+#btn-facade:hover{
+  background:rgba(78,74,134,1);
+  transform:translate(-50%,-50%) scale(1.03);
+}
+#btn-geo{
+  position:absolute;
+  left:18.5%;
+  top:76.0%;
+  transform:translate(-50%,-50%);
+  width:auto;
+  height:auto;
+  background:rgba(78,74,134,0.85);
+  border:none;
+  border-radius:10px;
+  outline:none;
+  cursor:pointer;
+  z-index:20;
+  padding:8px 14px;
+  display:block;
+  color:white;
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(11px,1vw,14px);
+  font-weight:600;
+  line-height:1.3;
+  transition:background .2s, transform .15s;
+  white-space:nowrap;
+}
+#btn-geo:hover{
+  background:rgba(78,74,134,1);
+  transform:translate(-50%,-50%) scale(1.03);
 }
 #btn-facade img{
   width:100%;
@@ -180,7 +219,8 @@ body{font-family:'DM Sans',sans-serif;display:block;}
   <button class="hotspot" id="hs-localisation" onclick="open_modal('localisation')" aria-label="Localisation"></button>
   <button class="hotspot" id="hs-evolution"    onclick="open_modal('evolution')"    aria-label="Évolution"></button>
   <button class="hotspot" id="hs-risques"      onclick="open_modal('risques')"      aria-label="Risques"></button>
-  <button id="btn-facade" onclick="window.location.href='https://fsoff.github.io/aquaculture-fr-3/'" aria-label="Les chiffres par façade"><img src="Fac_ade.png" alt="Les chiffres par façade"></button>
+  <button id="btn-facade" onclick="window.location.href='https://fsoff.github.io/aquaculture-fr-3/'" aria-label="Les chiffres par façade">Les chiffres<br>par façade</button>
+<button id="btn-geo" onclick="openEsri()" aria-label="Données géographiques">Données<br>géographiques</button>
 
   <!-- KPIs + Aperçu au centre -->
   <div id="kpi-overlay" style="
@@ -625,6 +665,34 @@ function draw_slope(){
   });
   svg.innerHTML=h;
 }
+
+function openEsri() {
+  var overlay = document.getElementById('esri-overlay');
+  var iframe  = document.getElementById('esri-iframe');
+  if (!iframe.src || iframe.src === window.location.href) {
+    iframe.src = 'https://geolittoral-data.cerema.fr/portal/apps/instant/sidebar/index.html?appid=77eda03d92904cd1a81a2b48e92a412b';
+  }
+  overlay.style.display = 'flex';
+  setTimeout(function(){ overlay.style.opacity = '1'; }, 10);
+}
+function closeEsri() {
+  var overlay = document.getElementById('esri-overlay');
+  overlay.style.opacity = '0';
+  setTimeout(function(){ overlay.style.display = 'none'; }, 300);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var overlay = document.getElementById('esri-overlay');
+  var closeBtn = document.getElementById('esri-close-btn');
+  if (overlay) overlay.addEventListener('click', function(e){ if (e.target === this) closeEsri(); });
+  if (closeBtn) closeBtn.addEventListener('click', closeEsri);
+});
 </script>
+
+<div id="esri-overlay" style="position:fixed;inset:0;background:rgba(10,20,50,.75);display:none;align-items:center;justify-content:center;z-index:500;opacity:0;transition:opacity .3s ease;">
+  <div style="position:relative;width:92%;max-width:1100px;height:82vh;border-radius:16px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.6);">
+    <button onclick="closeEsri()" style="position:absolute;top:10px;right:12px;z-index:10;background:rgba(78,74,134,.9);border:none;color:white;font-size:1.2rem;cursor:pointer;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>
+    <iframe id="esri-iframe" src="" width="100%" height="100%" frameborder="0" style="border:0;display:block;" allowfullscreen></iframe>
+  </div>
+</div>
 </body>
 </html>
