@@ -10,150 +10,35 @@
 html,body{width:100%;height:100%;overflow:hidden;background:transparent;}
 body{font-family:'DM Sans',sans-serif;display:block;}
 :root{--coral:#ef7657;--blue:#7e96cf;--navy:#4e4a86;}
-
 #wrap{position:relative;width:100%;max-width:none;margin:0;}
 #map-img{display:block;width:100%;height:auto;user-select:none;pointer-events:none;min-width:100%;}
-
-/* HOTSPOTS — CSS pur, left/top = centre du cercle */
-.hotspot{
-  position:absolute;
-  border-radius:0;
-  cursor:pointer;
-  background:transparent;
-  border:none;
-  z-index:10;
-  transform:translate(-50%,-50%);
-  width:14%;
-  aspect-ratio:auto;
-  padding:0;
-  background-size:contain;
-  background-repeat:no-repeat;
-  background-position:center;
-  transition:filter .15s, transform .15s;
-}
-.hotspot:hover{
-  filter:brightness(1.08);
-  transform:translate(-50%,-50%) scale(1.03);
-}
-.hotspot.active{
-  filter:brightness(0.88);
-  transform:translate(-50%,-50%) scale(1.03);
-}
-/* PNG spécifique — boutons carrés avec label */
-#hs-ventes      {background-image:url('ventes-clik.png');      width:14%;aspect-ratio:1/1;}
-#hs-production  {background-image:url('prod-click.png');        width:14%;aspect-ratio:1/1;}
-#hs-emploi      {background-image:url('emploi-click.png');      width:14%;aspect-ratio:1/1;}
-#hs-localisation{background-image:url('localisation-click.png');width:14%;aspect-ratio:1/1;}
-#hs-evolution   {background-image:url('evolution-click.png');   width:14%;aspect-ratio:1/1;}
-#hs-risques     {background-image:url('risques-click.png');     width:14%;aspect-ratio:1/1;}
-
-/* espacement égal 20px entre boutons */
-#hs-ventes      {left:8.5%;top:15.2%;}
-#hs-production  {left:8.5%;top:37.7%;}
-#hs-emploi      {left:8.5%;top:60.2%;}
-#hs-localisation{left:89.1%;top:15.2%;}
-#hs-evolution   {left:89.1%;top:37.7%;}
-#hs-risques     {left:89.1%;top:60.2%;}
-
-/* FAÇADE */
-#btn-facade{
-  position:absolute;
-  left:8.5%;
-  top:76.0%;
-  transform:translate(-50%,-50%);
-  width:auto;
-  height:auto;
-  background:rgba(78,74,134,0.85);
-  border:none;
-  border-radius:10px;
-  outline:none;
-  cursor:pointer;
-  z-index:20;
-  padding:8px 14px;
-  display:block;
-  color:white;
-  font-family:'DM Sans',sans-serif;
-  font-size:clamp(11px,1vw,14px);
-  font-weight:600;
-  line-height:1.3;
-  transition:background .2s, transform .15s;
-  white-space:nowrap;
-  text-align:center;
-}
-#btn-facade:hover{
-  background:rgba(78,74,134,1);
-  transform:translate(-50%,-50%) scale(1.03);
-}
-#btn-geo{
-  position:absolute;
-  left:20.5%;
-  top:76.0%;
-  transform:translate(-50%,-50%);
-  width:auto;
-  height:auto;
-  background:rgba(78,74,134,0.85);
-  border:none;
-  border-radius:10px;
-  outline:none;
-  cursor:pointer;
-  z-index:20;
-  padding:8px 14px;
-  display:block;
-  color:white;
-  font-family:'DM Sans',sans-serif;
-  font-size:clamp(11px,1vw,14px);
-  font-weight:600;
-  line-height:1.3;
-  transition:background .2s, transform .15s;
-  white-space:nowrap;
-}
-#btn-geo:hover{
-  background:rgba(78,74,134,1);
-  transform:translate(-50%,-50%) scale(1.03);
-}
-#btn-facade img{
-  width:100%;
-  height:auto;
-  display:block;
-}
-#btn-facade:hover{filter:brightness(1.08);transform:translate(-50%,-50%) scale(1.03);}
-
-/* OVERLAY */
-#overlay{
-  position:absolute;inset:0;z-index:30;
-  pointer-events:none;opacity:0;transition:opacity .22s;
-  background:rgba(78,74,134,0.08);
-}
+.hotspot{position:absolute;border-radius:0;cursor:pointer;background:transparent;border:none;z-index:10;transform:translate(-50%,-50%);width:14%;aspect-ratio:auto;padding:0;background-size:contain;background-repeat:no-repeat;background-position:center;transition:filter .15s,transform .15s;}
+.hotspot:hover{filter:brightness(1.08);transform:translate(-50%,-50%) scale(1.03);}
+.hotspot.active{filter:brightness(0.88);transform:translate(-50%,-50%) scale(1.03);}
+#hs-ventes{background-image:url('ventes-clik.png');width:14%;aspect-ratio:1/1;left:8.5%;top:15.2%;}
+#hs-production{background-image:url('prod-click.png');width:14%;aspect-ratio:1/1;left:8.5%;top:37.7%;}
+#hs-emploi{background-image:url('emploi-click.png');width:14%;aspect-ratio:1/1;left:8.5%;top:60.2%;}
+#hs-localisation{background-image:url('localisation-click.png');width:14%;aspect-ratio:1/1;left:89.1%;top:15.2%;}
+#hs-evolution{background-image:url('evolution-click.png');width:14%;aspect-ratio:1/1;left:89.1%;top:37.7%;}
+#hs-risques{background-image:url('risques-click.png');width:14%;aspect-ratio:1/1;left:89.1%;top:60.2%;}
+.btn-nav{position:absolute;top:76%;transform:translate(-50%,-50%);background:rgba(78,74,134,0.85);border:none;border-radius:10px;outline:none;cursor:pointer;z-index:20;padding:8px 14px;color:white;font-family:'DM Sans',sans-serif;font-size:clamp(10px,.95vw,13px);font-weight:600;line-height:1.3;transition:background .2s,transform .15s;white-space:nowrap;text-align:center;}
+.btn-nav:hover{background:rgba(78,74,134,1);transform:translate(-50%,-50%) scale(1.03);}
+#btn-facade{left:8.5%;}#btn-geo{left:17%;}#btn-data{left:25.5%;}
+#kpi-box{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center;z-index:9;pointer-events:none;background:rgba(255,255,255,0.93);border:2.5px solid #4e4a86;border-radius:18px;padding:18px 32px 14px;box-shadow:0 6px 28px rgba(78,74,134,0.14);backdrop-filter:blur(8px);}
+#kpi-box .kpi-row{display:flex;gap:40px;align-items:baseline;}
+#kpi-box .kpi-sep{width:1px;height:40px;background:rgba(126,150,207,0.4);align-self:center;}
+#kpi-tonnes,#kpi-euros{font-family:'DM Sans',sans-serif;font-size:clamp(32px,4vw,58px);font-weight:700;color:#4e4a86;line-height:1;}
+.kpi-sub{font-size:clamp(9px,1vw,13px);color:#7e96cf;font-weight:400;margin-top:4px;}
+#kpi-year{font-family:'DM Sans',sans-serif;font-size:clamp(13px,1.5vw,20px);color:#ef7657;font-weight:600;margin-top:8px;opacity:0;transition:opacity 1s ease;letter-spacing:.08em;}
+#overlay{position:absolute;inset:0;z-index:30;pointer-events:none;opacity:0;transition:opacity .22s;background:rgba(78,74,134,0.08);}
 #overlay.open{opacity:1;pointer-events:all;}
-
-/* MODALE */
-#modal{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%) scale(.96);
-  /* stay inside map: left edge clears left buttons, right edge clears right buttons */
-  width:56%;
-  max-height:80%;
-  background:rgba(255,255,255,0.96);
-  backdrop-filter:blur(14px);
-  border-radius:18px;
-  padding:24px 28px 20px;
-  border:1px solid rgba(126,150,207,.15);
-  transition:transform .22s;
-  overflow-y:auto;
-  /* never overflow wrap */
-  box-sizing:border-box;
-}
+#modal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.96);width:57%;max-height:83%;background:rgba(255,255,255,0.97);backdrop-filter:blur(14px);border-radius:18px;padding:24px 28px 20px;border:1px solid rgba(126,150,207,.15);transition:transform .22s;overflow-y:auto;box-sizing:border-box;}
 #overlay.open #modal{transform:translate(-50%,-50%) scale(1);}
-
 .m-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:3px;}
 .m-sub{font-size:11px;color:#aaa;font-weight:300;margin-bottom:13px;}
 .m-bar{height:2px;background:linear-gradient(90deg,var(--coral),var(--blue),transparent);border-radius:2px;margin-bottom:18px;}
 .src{font-size:10px;color:#bbb;font-style:italic;margin-top:14px;}
 .etp-note{font-size:10px;color:#888;background:rgba(126,150,207,.1);border-radius:6px;padding:8px 10px;margin-bottom:14px;line-height:1.5;}
-
-/* KPI */
 .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;}
 .kpi{background:rgba(78,74,134,.07);border-left:3px solid var(--coral);border-radius:8px;padding:11px 13px;}
 .kv{font-size:21px;font-weight:600;color:var(--navy);line-height:1;}
@@ -162,535 +47,541 @@ body{font-family:'DM Sans',sans-serif;display:block;}
 .pb{display:flex;flex-direction:column;align-items:center;gap:4px;}
 .pb-block{width:64px;border-radius:6px 6px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 4px;}
 .pb-name{font-size:10px;color:#666;text-align:center;}
-
-/* PRODUCTION barres pictos */
-.prod-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.prod-lbl{width:90px;flex-shrink:0;text-align:right;}
-.prod-lbl b{font-size:10px;font-weight:600;color:var(--navy);display:block;}
-.prod-lbl span{font-size:9px;color:#aaa;}
-.prod-scroll{flex:1;}
-.prod-pics{display:flex;flex-wrap:wrap;gap:2px;align-items:center;padding:2px 0 4px;}
-.prod-pics img{height:30px;width:auto;flex-shrink:0;display:block;}
-
-/* BUBBLE EMPLOI */
-.bubble-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.bubble-card{background:rgba(78,74,134,.06);border-radius:10px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;text-align:center;}
-.bubble-circle{border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:7px;flex-shrink:0;}
-.bubble-name{font-size:10px;font-weight:600;color:var(--navy);margin-bottom:2px;}
-.bubble-ent{font-size:9px;color:#aaa;}
-.bubble-f{font-size:9px;color:var(--coral);margin-top:2px;}
-.bubble-note{font-size:9px;color:#bbb;text-align:center;margin-top:10px;font-style:italic;}
-
-/* SPIDER */
-.spider-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.spider-card{background:rgba(78,74,134,.05);border-radius:10px;padding:10px 8px 8px;display:flex;flex-direction:column;align-items:center;}
-.spider-name{font-size:9.5px;font-weight:600;color:var(--navy);text-align:center;margin-bottom:4px;line-height:1.2;}
-.spider-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px 4px;margin-top:6px;width:100%;}
-.spider-stat{display:flex;align-items:center;gap:3px;font-size:8px;}
-
-/* LOCALISATION */
 .loc-wrap{position:relative;width:100%;border-radius:10px;overflow:hidden;}
 .loc-wrap img{width:100%;display:block;}
-.loc-dot{
-  position:absolute;border-radius:50%;
-  transform:translate(-50%,-50%);
-  display:flex;align-items:center;justify-content:center;
-  font-size:8px;font-weight:700;color:#fff;
-  border:2px solid rgba(255,255,255,.85);
-  transition:transform .15s;
-}
+.loc-dot{position:absolute;border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;border:2px solid rgba(255,255,255,.85);transition:transform .15s;}
 .loc-dot:hover{transform:translate(-50%,-50%) scale(1.14);}
-.loc-lbl{
-  position:absolute;transform:translate(-50%,0);
-  font-size:8px;font-weight:500;color:var(--navy);
-  background:rgba(255,255,255,.88);padding:1px 5px;border-radius:3px;
-  white-space:nowrap;pointer-events:none;
-}
+.loc-lbl{position:absolute;transform:translate(-50%,0);font-size:8px;font-weight:500;color:var(--navy);background:rgba(255,255,255,.88);padding:1px 5px;border-radius:3px;white-space:nowrap;pointer-events:none;}
+.carousel-wrap{position:relative;overflow:hidden;}
+.carousel-slides{display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);}
+.carousel-slide{min-width:100%;box-sizing:border-box;}
+.carousel-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.carousel-dots{display:flex;gap:6px;justify-content:center;flex:1;}
+.c-dot{width:8px;height:8px;border-radius:50%;background:rgba(78,74,134,.2);cursor:pointer;transition:background .2s,transform .2s;}
+.c-dot.active{background:var(--navy);transform:scale(1.2);}
+.c-arrow{background:rgba(78,74,134,0.12);border:none;border-radius:50%;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:14px;transition:background .2s;flex-shrink:0;}
+.c-arrow:hover{background:rgba(78,74,134,0.28);}
+.c-arrow:disabled{opacity:0.3;cursor:default;}
+.carousel-label{font-size:10px;font-weight:600;color:var(--navy);letter-spacing:.04em;text-transform:uppercase;text-align:center;margin-bottom:10px;min-height:14px;}
+.insight-row{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.insight{font-size:10px;color:#555;border-radius:0 6px 6px 0;padding:6px 8px;}
 </style>
 </head>
 <body>
 <div id="wrap">
-
-  <img id="map-img" src="info-france1.png" alt="Carte aquaculture France">
-
-  <button class="hotspot" id="hs-ventes"       onclick="open_modal('ventes')"       aria-label="Ventes"></button>
-  <button class="hotspot" id="hs-production"   onclick="open_modal('production')"   aria-label="Production"></button>
-  <button class="hotspot" id="hs-emploi"       onclick="open_modal('emploi')"       aria-label="Emploi"></button>
-  <button class="hotspot" id="hs-localisation" onclick="open_modal('localisation')" aria-label="Localisation"></button>
-  <button class="hotspot" id="hs-evolution"    onclick="open_modal('evolution')"    aria-label="Évolution"></button>
-  <button class="hotspot" id="hs-risques"      onclick="open_modal('risques')"      aria-label="Risques"></button>
-  <button id="btn-facade" onclick="window.location.href='https://fsoff.github.io/aquaculture-fr-3/'" aria-label="Les chiffres par façade">Les chiffres<br>par façade</button>
-<button id="btn-geo" onclick="openEsri()" aria-label="Données géographiques">Données<br>géographiques</button>
-
-  <!-- KPIs + Aperçu au centre -->
-  <div id="kpi-overlay" style="
-    position:absolute;
-    left:50%;top:48%;
-    transform:translate(-50%,-50%);
-    display:flex;flex-direction:column;align-items:center;
-    text-align:center;
-    z-index:9;
-    pointer-events:none;
-  ">
-    <div style="display:flex;gap:40px;align-items:baseline;">
-      <div style="text-align:center;">
-        <div id="kpi-tonnes" style="
-          font-family:'DM Sans',sans-serif;
-          font-size:clamp(36px,4.5vw,64px);
-          font-weight:700;color:#4e4a86;line-height:1;
-          text-shadow:0 2px 8px rgba(255,255,255,0.9);
-        ">0 t</div>
-        <div style="font-size:clamp(10px,1.1vw,14px);color:#7e96cf;font-weight:400;margin-top:4px;">volume produit</div>
-      </div>
-      <div style="width:1px;height:40px;background:rgba(126,150,207,0.4);align-self:center;"></div>
-      <div style="text-align:center;">
-        <div id="kpi-euros" style="
-          font-family:'DM Sans',sans-serif;
-          font-size:clamp(36px,4.5vw,64px);
-          font-weight:700;color:#4e4a86;line-height:1;
-          text-shadow:0 2px 8px rgba(255,255,255,0.9);
-        ">0 M€</div>
-        <div style="font-size:clamp(10px,1.1vw,14px);color:#7e96cf;font-weight:400;margin-top:4px;">valeur des ventes</div>
-      </div>
-    </div>
-    <div id="kpi-year" style="
-      font-family:'DM Sans',sans-serif;
-      font-size:clamp(16px,1.8vw,26px);
-      color:#ef7657;font-weight:600;
-      margin-top:10px;opacity:0;
-      transition:opacity 1s ease;
-      letter-spacing:0.08em;
-    ">en 2024</div>
+<img id="map-img" src="info-france1.png" alt="Carte aquaculture France">
+<button class="hotspot" id="hs-ventes"       onclick="open_modal('ventes')"       aria-label="Ventes"></button>
+<button class="hotspot" id="hs-production"   onclick="open_modal('production')"   aria-label="Production"></button>
+<button class="hotspot" id="hs-emploi"       onclick="open_modal('emploi')"       aria-label="Emploi"></button>
+<button class="hotspot" id="hs-localisation" onclick="open_modal('localisation')" aria-label="Localisation"></button>
+<button class="hotspot" id="hs-evolution"    onclick="open_modal('evolution')"    aria-label="Evolution"></button>
+<button class="hotspot" id="hs-risques"      onclick="open_modal('risques')"      aria-label="Risques"></button>
+<button id="btn-facade" class="btn-nav" onclick="window.location.href='https://fsoff.github.io/aquaculture-fr-3/'">Les chiffres<br>par fa&#231;ade</button>
+<button id="btn-geo"    class="btn-nav" onclick="openEsri()">Donn&#233;es<br>g&#233;ographiques</button>
+<button id="btn-data"   class="btn-nav" onclick="window.open('https://agreste.agriculture.gouv.fr/agreste-web/disaron/Chd2604/detail/','_blank')">Chiffres<br>&amp; Donn&#233;es &#8599;</button>
+<div id="kpi-box">
+  <div class="kpi-row">
+    <div style="text-align:center;"><div id="kpi-tonnes">0 t</div><div class="kpi-sub">volume produit</div></div>
+    <div class="kpi-sep"></div>
+    <div style="text-align:center;"><div id="kpi-euros">0 M&#8364;</div><div class="kpi-sub">valeur des ventes</div></div>
   </div>
-
-    <!-- Aperçu : élément indépendant, HORS du kpi-overlay -->
-  <button id="btn-apercu" style="
-    position:absolute;
-    left:50%;
-    top:58%;
-    transform:translateX(-50%);
-    opacity:0;
-    pointer-events:none;
-    background:transparent;
-    border:none;
-    padding:0;
-    cursor:pointer;
-    z-index:9;
-    transition:opacity 0.8s ease;
-    display:block;
-  "><img src="ape-u.png" style="height:clamp(90px,10vw,120px);width:auto;display:block;" alt="Aperçu"></button>
-
-  <div id="overlay" onclick="handle_overlay(event)">
-    <div id="modal">
-      <div class="m-title" id="m-title"></div>
-      <div class="m-sub"   id="m-sub"></div>
-      <div class="m-bar"></div>
-      <div id="m-content"></div>
-    </div>
+  <div id="kpi-year">en 2024</div>
+</div>
+<button id="btn-apercu" style="position:absolute;left:50%;top:58%;transform:translateX(-50%);opacity:0;pointer-events:none;background:transparent;border:none;padding:0;cursor:pointer;z-index:9;transition:opacity 0.8s ease;display:block;">
+  <img src="ape-u.png" style="height:clamp(90px,10vw,120px);width:auto;display:block;" alt="Aper&#231;u">
+</button>
+<div id="overlay" onclick="handle_overlay(event)">
+  <div id="modal">
+    <div class="m-title" id="m-title"></div>
+    <div class="m-sub"   id="m-sub"></div>
+    <div class="m-bar"></div>
+    <div id="m-content"></div>
   </div>
-
+</div>
 </div>
 <script>
 let active=null;
-
 function open_modal(key){
   if(active===key){close_modal();return;}
-  // désactiver l'ancien bouton si il a un hotspot
-  if(active){
-    const prev=document.getElementById('hs-'+active);
-    if(prev) prev.classList.remove('active');
-  }
+  if(active){const p=document.getElementById('hs-'+active);if(p)p.classList.remove('active');}
   active=key;
-  // activer le hotspot si il existe (pas pour 'apercu')
-  const hs=document.getElementById('hs-'+key);
-  if(hs) hs.classList.add('active');
-  const cfg=MODALS[key];
-  if(!cfg) return;
+  const hs=document.getElementById('hs-'+key);if(hs)hs.classList.add('active');
+  const cfg=MODALS[key];if(!cfg)return;
   document.getElementById('m-title').textContent=cfg.title;
   document.getElementById('m-sub').textContent=cfg.sub;
   document.getElementById('m-content').innerHTML=cfg.render();
-  // position spéciale pour localisation
   const modal=document.getElementById('modal');
-  if(key==='localisation'){
-    modal.style.top='2%';
-    modal.style.transform='translate(-50%,0) scale(1)';
-  } else {
-    modal.style.top='50%';
-    modal.style.transform='translate(-50%,-50%) scale(1)';
-  }
+  if(key==='localisation'){modal.style.top='2%';modal.style.transform='translate(-50%,0) scale(1)';}
+  else{modal.style.top='50%';modal.style.transform='translate(-50%,-50%) scale(1)';}
   document.getElementById('overlay').classList.add('open');
-  if(cfg.after) requestAnimationFrame(()=>setTimeout(cfg.after,80));
+  if(cfg.after)requestAnimationFrame(()=>setTimeout(cfg.after,80));
 }
 function close_modal(){
   document.getElementById('overlay').classList.remove('open');
   const modal=document.getElementById('modal');
-  modal.style.top='50%';
-  modal.style.transform='translate(-50%,-50%) scale(.96)';
-  if(active){
-    const el=document.getElementById('hs-'+active);
-    if(el) el.classList.remove('active');
-    active=null;
-  }
+  modal.style.top='50%';modal.style.transform='translate(-50%,-50%) scale(.96)';
+  if(active){const el=document.getElementById('hs-'+active);if(el)el.classList.remove('active');active=null;}
 }
-function handle_overlay(e){
-  if(e.target===document.getElementById('overlay')) close_modal();
+function handle_overlay(e){if(e.target===document.getElementById('overlay'))close_modal();}
+
+function makeCarousel(id,labels){
+  let cur=0;const total=labels.length;
+  function goTo(i){
+    cur=Math.max(0,Math.min(i,total-1));
+    const w=document.getElementById(id+'-slides');
+    if(w)w.style.transform='translateX(-'+(cur*100)+'%)';
+    document.querySelectorAll('#'+id+'-dots .c-dot').forEach((d,j)=>d.classList.toggle('active',j===cur));
+    const lbl=document.getElementById(id+'-lbl');if(lbl)lbl.textContent=labels[cur];
+    const prev=document.getElementById(id+'-prev'),next=document.getElementById(id+'-next');
+    if(prev)prev.disabled=(cur===0);if(next)next.disabled=(cur===total-1);
+  }
+  setTimeout(()=>{
+    document.getElementById(id+'-prev')?.addEventListener('click',()=>goTo(cur-1));
+    document.getElementById(id+'-next')?.addEventListener('click',()=>goTo(cur+1));
+    document.querySelectorAll('#'+id+'-dots .c-dot').forEach((d,j)=>d.addEventListener('click',()=>goTo(j)));
+    goTo(0);
+  },50);
 }
 
 const MODALS={
+ventes:{
+  title:"Ventes finales de l'aquaculture marine",sub:'France \u2014 Agreste 2024',
+  render:()=>{
+    const LBL=["Vue d'ensemble & classement europ\xe9en","Evolution aquaculture 2020\u20132024","Evolution conchyliculture 2020\u20132024","R\xe9partition en valeur par bassin 2024"];
+    return '<div class="carousel-wrap">'+
+    '<div class="carousel-nav"><button class="c-arrow" id="vc-prev">&#8592;</button>'+
+    '<div class="carousel-dots" id="vc-dots">'+LBL.map((_,i)=>'<div class="c-dot'+(i===0?' active':'')+'"></div>').join('')+'</div>'+
+    '<button class="c-arrow" id="vc-next">&#8594;</button></div>'+
+    '<div id="vc-lbl" class="carousel-label">'+LBL[0]+'</div>'+
+    '<div class="carousel-slides" id="vc-slides">'+
 
-  ventes:{
-    title:"Ventes finales de l'aquaculture",
-    sub:'France — Agreste 2024',
-    render:()=>`
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kv">178 879 t</div><div class="kl">Volume total produit</div></div>
-        <div class="kpi"><div class="kv">870 M€</div><div class="kl">Valeur totale des ventes</div></div>
-        <div class="kpi"><div class="kv">3 143</div><div class="kl">Entreprises productrices</div></div>
-        <div class="kpi"><div class="kv">4,86 €/kg</div><div class="kl">Prix moyen toutes filières</div></div>
-      </div>
-      <div style="font-size:10px;font-weight:600;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Classement européen</div>
-      <div class="podium" style="gap:16px;align-items:flex-end;justify-content:center;margin-top:8px;">
-        <div class="pb">
-          <span style="font-size:15px">🥇</span>
-          <div class="pb-block" style="height:90px;background:#7e96cf;width:76px;">
-            <span style="font-size:24px">🇪🇸</span>
-            <span style="font-size:10px;color:#fff;font-weight:600;margin-top:2px;">Espagne</span>
-          </div>
-          <div class="pb-name" style="margin-top:4px;">1er</div>
-          <div style="font-size:10px;color:#7e96cf;font-weight:500;margin-top:2px;">~313 kt</div>
-          <div style="font-size:9px;color:#aaa;">~630 M€</div>
-        </div>
-        <div class="pb">
-          <span style="font-size:15px">🥈</span>
-          <div class="pb-block" style="height:72px;background:#ef7657;width:76px;">
-            <span style="font-size:24px">🇫🇷</span>
-            <span style="font-size:10px;color:#fff;font-weight:600;margin-top:2px;">France</span>
-          </div>
-          <div class="pb-name" style="font-weight:700;color:var(--navy);margin-top:4px;">2e</div>
-          <div style="font-size:10px;color:#ef7657;font-weight:600;margin-top:2px;">178 kt</div>
-          <div style="font-size:9px;color:#aaa;">870 M€</div>
-        </div>
-        <div class="pb">
-          <span style="font-size:15px">🥉</span>
-          <div class="pb-block" style="height:56px;background:#b0bfe8;width:76px;">
-            <span style="font-size:24px">🇬🇧</span>
-            <span style="font-size:10px;color:#fff;font-weight:600;margin-top:2px;">Royaume-Uni</span>
-          </div>
-          <div class="pb-name" style="margin-top:4px;">3e</div>
-          <div style="font-size:10px;color:#9b94c8;font-weight:500;margin-top:2px;">~172 kt</div>
-          <div style="font-size:9px;color:#aaa;">~570 M€</div>
-        </div>
-      </div>
-      <p style="font-size:9px;color:#ccc;text-align:center;margin-top:8px;font-style:italic;">Données européennes : Eurostat 2022 (dernière année disponible)</p>
-      <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`
+    '<div class="carousel-slide">'+
+    '<div class="kpi-grid">'+
+    '<div class="kpi"><div class="kv">178\u202f879 t</div><div class="kl">Volume total produit</div></div>'+
+    '<div class="kpi"><div class="kv">870 M\u20ac</div><div class="kl">Valeur totale des ventes</div></div>'+
+    '<div class="kpi"><div class="kv">3\u202f143</div><div class="kl">Entreprises productrices</div></div>'+
+    '<div class="kpi"><div class="kv">4,86 \u20ac/kg</div><div class="kl">Prix moyen toutes fili\xe8res</div></div>'+
+    '</div>'+
+    '<div style="font-size:10px;font-weight:600;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Classement europ\xe9en</div>'+
+    '<div class="podium" style="gap:16px;">'+
+    '<div class="pb"><div class="pb-block" style="height:90px;background:#7e96cf;width:76px;flex-direction:column;"><span style="font-size:30px;line-height:1;">🇪🇸</span><span style="font-size:10px;color:#fff;font-weight:600;margin-top:3px;">Espagne</span></div><div class="pb-name" style="margin-top:4px;">1<sup>er</sup></div><div style="font-size:10px;color:#7e96cf;font-weight:500;">~313 kt</div><div style="font-size:9px;color:#aaa;">~630 M€</div></div>'+
+    '<div class="pb"><div class="pb-block" style="height:72px;background:#ef7657;width:76px;flex-direction:column;"><span style="font-size:30px;line-height:1;">🇫🇷</span><span style="font-size:10px;color:#fff;font-weight:600;margin-top:3px;">France</span></div><div class="pb-name" style="font-weight:700;color:var(--navy);margin-top:4px;">2<sup>e</sup></div><div style="font-size:10px;color:#ef7657;font-weight:600;">178 kt</div><div style="font-size:9px;color:#aaa;">870 M€</div></div>'+
+    '<div class="pb"><div class="pb-block" style="height:56px;background:#b0bfe8;width:76px;flex-direction:column;"><span style="font-size:30px;line-height:1;">🇬🇧</span><span style="font-size:10px;color:#fff;font-weight:600;margin-top:3px;">Royaume-Uni</span></div><div class="pb-name" style="margin-top:4px;">3<sup>e</sup></div><div style="font-size:10px;color:#9b94c8;font-weight:500;">~172 kt</div><div style="font-size:9px;color:#aaa;">~570 M€</div></div>'+
+    '</div>'+
+    '<p style="font-size:9px;color:#ccc;text-align:center;margin-top:8px;font-style:italic;">Données européennes : Eurostat 2022</p>'+
+    '<p class="src">Source : Agreste — Enquête aquaculture 2024</p>'+
+    '</div>'+
+
+    '<div class="carousel-slide">'+
+    '<svg id="chart-aqua" viewBox="0 0 520 200" style="width:100%;display:block;"></svg>'+
+    '<div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:6px;">'+
+    '<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#555;"><div style="width:18px;height:2px;background:#7e96cf;"></div>Coquillages &amp; crustac\xe9s</div>'+
+    '<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#555;"><div style="width:18px;height:2px;background:#ef7657;"></div>Poissons marins</div>'+
+    '<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#555;"><div style="width:18px;height:2px;background:#2d9e6b;"></div>Algues marines</div>'+
+    '<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#555;"><div style="width:18px;height:2px;border-top:2px dashed #4e4a86;"></div>Total</div>'+
+    '</div>'+
+    '<div class="insight-row">'+
+    '<div class="insight" style="background:rgba(126,150,207,.08);border-left:3px solid #7e96cf;"><strong style="color:var(--navy)">Poids des coquillages</strong> : moteur principal du secteur.</div>'+
+    '<div class="insight" style="background:rgba(239,118,87,.08);border-left:3px solid var(--coral);"><strong style="color:var(--navy)">Tendance globale</strong> : baisse de 6,5% sur 5 ans.</div>'+
+    '<div class="insight" style="background:rgba(45,158,107,.08);border-left:3px solid #2d9e6b;"><strong style="color:var(--navy)">Emergence des algues</strong> : production doubl\xe9e en 5 ans.</div>'+
+    '<div class="insight" style="background:rgba(78,74,134,.08);border-left:3px solid var(--navy);"><strong style="color:var(--navy)">R\xe9silience poissons</strong> : stabilisation apr\xe8s baisse.</div>'+
+    '</div>'+
+    '<p class="src">Source : Agreste \u2014 Enqu\xeate aquaculture 2024</p>'+
+    '</div>'+
+
+    '<div class="carousel-slide">'+
+    '<svg id="chart-conchy" viewBox="0 0 520 200" style="width:100%;display:block;"></svg>'+
+    '<div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:6px;">'+
+    '<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#555;"><div style="width:18px;height:2px;background:#7e96cf;"></div>Hu\xeetres</div>'+
+    '<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#555;"><div style="width:18px;height:2px;background:#ef7657;"></div>Moules</div>'+
+    '<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#555;"><div style="width:18px;height:2px;background:#2d9e6b;"></div>Autres coquillages</div>'+
+    '</div>'+
+    '<div class="insight-row">'+
+    '<div class="insight" style="background:rgba(126,150,207,.08);border-left:3px solid #7e96cf;"><strong style="color:var(--navy)">Stabilit\xe9 des hu\xeetres</strong> : production qui se maintient.</div>'+
+    '<div class="insight" style="background:rgba(239,118,87,.08);border-left:3px solid var(--coral);"><strong style="color:var(--navy)">Recul des moules</strong> : tendance \xe0 la baisse confirm\xe9e.</div>'+
+    '<div class="insight" style="background:rgba(45,158,107,.08);border-left:3px solid #2d9e6b;"><strong style="color:var(--navy)">Essor autres coquillages</strong> : forte progression fin de p\xe9riode.</div>'+
+    '<div class="insight" style="background:rgba(78,74,134,.08);border-left:3px solid var(--navy);"><strong style="color:var(--navy)">Hi\xe9rarchie inchang\xe9e</strong> : l\'hu\xeetre reste esp\xe8ce dominante.</div>'+
+    '</div>'+
+    '<p class="src">Source : Agreste \u2014 Enqu\xeate aquaculture 2024</p>'+
+    '</div>'+
+
+    '<div class="carousel-slide">'+
+    '<svg id="chart-valeur" viewBox="0 0 520 240" style="width:100%;display:block;"></svg>'+
+    '<div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:6px;">'+
+    '<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#555;"><div style="width:12px;height:12px;border-radius:2px;background:#7e96cf;"></div>Hu\xeetres</div>'+
+    '<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#555;"><div style="width:12px;height:12px;border-radius:2px;background:#4e4a86;"></div>Moules</div>'+
+    '</div>'+
+    '<div class="insight-row">'+
+    '<div class="insight" style="background:rgba(126,150,207,.08);border-left:3px solid #7e96cf;"><strong style="color:var(--navy)">L\'hu\xeetre, moteur financier</strong> : quasi-totalit\xe9 du CA en Charente-Maritime, Arcachon et M\xe9diterran\xe9e.</div>'+
+    '<div class="insight" style="background:rgba(78,74,134,.08);border-left:3px solid var(--navy);"><strong style="color:var(--navy)">Maintien de la moule en valeur</strong> : poids significatif en Bretagne-Nord et Normandie.</div>'+
+    '</div>'+
+    '<p class="src">Source : Agreste \u2014 Estimations d\'apr\xe8s proportions visuelles 2024</p>'+
+    '</div>'+
+
+    '</div></div>';
   },
-
-  production:{
-    title:'Répartition de la production marine',
-    sub:'1 pictogramme = 5 000 t — 2024',
-    render:()=>{
-      const UNIT=5000;
-      const data=[
-        {l:'Huîtres',       kt:'81,4', v:81383, pic:'huitre-col.png'},
-        {l:'Moules',        kt:'48,8', v:48775, pic:'moule-col.png'},
-        {l:'Salmonidés',    kt:'33,3', v:33255, pic:'salmonide-col.png'},
-        {l:'Poissons mar.', kt:'6,6',  v:6619,  pic:'poisson-col.png'},
-        {l:'Algues',        kt:'0,7',  v:724,   pic:'algue-col.png'},
-      ];
-      return data.map(d=>{
-        const n=Math.max(1,Math.round(d.v/UNIT));
-        const imgs=Array.from({length:n},(_,i)=>{
-          const rem=d.v%UNIT;
-          const op=(i===n-1&&rem>200)?(rem/UNIT).toFixed(2):1;
-          return `<img src="${d.pic}" style="height:30px;width:auto;flex-shrink:0;opacity:${op};" alt="${d.l}">`;
-        }).join('');
-        return `<div class="prod-row">
-          <div class="prod-lbl"><b>${d.l}</b><span>${d.kt} kt</span></div>
-          <div class="prod-scroll"><div class="prod-pics">${imgs}</div></div>
-        </div>`;
-      }).join('')+
-      `<div style="font-size:9px;color:#bbb;text-align:right;margin-top:2px;font-style:italic;">1 pictogramme ≈ 5 000 t · scroll →</div>
-       <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`;
-    }
-  },
-
-  evolution:{
-    title:'Évolution des volumes 2023 → 2024',
-    sub:'Slopegraph par filière marine',
-    render:()=>`
-      <svg id="slope-svg" viewBox="0 0 460 260" style="width:100%;display:block;"></svg>
-      <p class="src">Source : Agreste — Enquêtes aquaculture 2023 & 2024</p>`,
-    after:()=>draw_slope()
-  },
-
-  emploi:{
-    title:'Emploi par filière',
-    sub:'Équivalents Temps Plein (ETP) — 2024',
-    render:()=>{
-      const data=[
-        {n:'Conchyliculture', ent:2320, etp:5836, f:26.5, c:'#4e4a86', sz:56},
-        {n:'Pisc. eau douce',  ent:334,  etp:983,  f:26.1, c:'#7e96cf', sz:36},
-        {n:'Algues & cyano',   ent:248,  etp:202,  f:38.2, c:'#2d9e6b', sz:26},
-        {n:'Pisc. marine',     ent:32,   etp:390,  f:16.4, c:'#ef7657', sz:32},
-        {n:'Pisc. étangs',     ent:209,  etp:166,  f:18.9, c:'#9b94c8', sz:22},
-      ];
-      const cards=data.map(d=>`
-        <div class="bubble-card">
-          <div class="bubble-circle" style="width:${d.sz}px;height:${d.sz}px;background:${d.c};">
-            <span style="font-size:${Math.max(9,d.sz/3.8)}px;font-weight:600;color:#fff;">
-              ${d.etp>999?(d.etp/1000).toFixed(1)+'k':d.etp}
-            </span>
-          </div>
-          <div class="bubble-name">${d.n}</div>
-          <div class="bubble-ent">${d.ent} entreprises</div>
-          <div class="bubble-f">${d.f}% femmes</div>
-        </div>`).join('');
-      return `
-        <div class="etp-note">
-          <strong style="color:var(--navy)">ETP</strong> — Équivalent Temps Plein : 1 ETP = 1 personne travaillant à temps plein sur une année complète.
-        </div>
-        <div class="bubble-grid">${cards}</div>
-        <div class="bubble-note">Taille des cercles proportionnelle aux ETP</div>
-        <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`;
-    }
-  },
-
-  risques:{
-    title:'Événements exceptionnels 2024',
-    sub:'Profil de risque par région conchylicole',
-    render:()=>{
-      const regions=[
-        {n:'Bretagne-Nord',  vals:[21.1,16.7,0,   0   ]},
-        {n:'Normandie',      vals:[13.9,12.7,1.7, 1.8 ]},
-        {n:'Bretagne-Sud',   vals:[1.7, 3.7, 1.1, 0.3 ]},
-        {n:'Pays de Loire',  vals:[1.2, 4.4, 4.4, 1.0 ]},
-        {n:'Char.-Maritime', vals:[3.6, 3.1, 1.3, 1.2 ]},
-        {n:'Arcachon',       vals:[4.2, 8.9, 6.2,16.4 ]},
-        {n:'Méditerranée',   vals:[10.9,3.1, 1.2, 3.3 ]},
-      ];
-      const LABELS=['Prédation','Climat','Virus','Mortalité'];
-      const SHORT=['Préd.','Clim.','Virus','Mort.'];
-      const COLS=['#ef7657','#7e96cf','#4e4a86','#9b94c8'];
-      const MX=25,R=36,SZ=104;
-      const ANG=Array.from({length:4},(_,i)=>-Math.PI/2+i*Math.PI/2);
-
-      function spider(vals){
-        const cx=SZ/2,cy=SZ/2;
-        let h='';
-        [.33,.66,1].forEach(f=>{
-          const pts=ANG.map(a=>`${cx+R*f*Math.cos(a)},${cy+R*f*Math.sin(a)}`).join(' ');
-          h+=`<polygon points="${pts}" fill="none" stroke="rgba(78,74,134,.18)" stroke-width=".6"/>`;
-        });
-        ANG.forEach((a,i)=>{
-          h+=`<line x1="${cx}" y1="${cy}" x2="${cx+R*Math.cos(a)}" y2="${cy+R*Math.sin(a)}" stroke="rgba(78,74,134,.18)" stroke-width=".6"/>`;
-          const lx=cx+(R+10)*Math.cos(a),ly=cy+(R+10)*Math.sin(a);
-          h+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="7" fill="${COLS[i]}" font-family="DM Sans,sans-serif" font-weight="500">${['Préd','Clim','Virus','Mort'][i]}</text>`;
-        });
-        const dpts=vals.map((v,i)=>{
-          const r=Math.min(v/MX,1)*R;
-          return `${cx+r*Math.cos(ANG[i])},${cy+r*Math.sin(ANG[i])}`;
-        }).join(' ');
-        h+=`<polygon points="${dpts}" fill="rgba(239,118,87,.28)" stroke="#ef7657" stroke-width="1.4"/>`;
-        vals.forEach((v,i)=>{
-          if(v>0){
-            const r=Math.min(v/MX,1)*R;
-            h+=`<circle cx="${cx+r*Math.cos(ANG[i])}" cy="${cy+r*Math.sin(ANG[i])}" r="2.2" fill="#ef7657"/>`;
-          }
-        });
-        return h;
-      }
-
-      const cards=regions.map(reg=>{
-        const stats=reg.vals.map((v,i)=>
-          `<div class="spider-stat">
-            <div style="width:6px;height:6px;border-radius:50%;background:${COLS[i]};flex-shrink:0;"></div>
-            <span style="color:#888;">${SHORT[i]}</span>
-            <span style="font-weight:600;color:${v>=10?COLS[i]:v>4?'#555':'#aaa'};">${v>0?v.toFixed(1)+'%':'—'}</span>
-          </div>`
-        ).join('');
-        return `<div class="spider-card">
-          <div class="spider-name">${reg.n}</div>
-          <svg viewBox="0 0 ${SZ} ${SZ}" width="${SZ}" height="${SZ}" style="overflow:visible;display:block;">${spider(reg.vals)}</svg>
-          <div class="spider-stats">${stats}</div>
-        </div>`;
-      }).join('');
-
-      return `<div class="spider-grid">${cards}</div>
-        <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`;
-    }
-  },
-
-  apercu:{
-    title:"L'aquaculture marine française",
-    sub:'Une filière diverse, du littoral à l\'assiette',
-    render:()=>`
-      <div style="display:flex;flex-direction:column;gap:14px;line-height:1.65;font-size:13px;color:#444;">
-        <p>L'aquaculture marine désigne l'ensemble des activités d'élevage dans l'eau salée, qu'il s'agisse d'animaux ou de végétaux.</p>
-        <div style="background:rgba(126,150,207,.08);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;">
-          <div style="font-size:11px;font-weight:600;color:var(--navy);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;">Les grandes filières</div>
-          <p>La <strong style="color:var(--navy)">pisciculture</strong> correspond à l'élevage de poissons (saumons, bars, daurades…), <strong style="color:var(--navy)">l'algoculture</strong> aux algues (kombu, wakamé, nori…), et la <strong style="color:var(--navy)">conchyliculture</strong> aux coquillages — notamment l'ostréiculture (huîtres) et la mytiliculture (moules), qui sont les activités les plus connues.</p>
-        </div>
-        <p>D'autres productions existent, comme l'élevage de crevettes en Nouvelle-Calédonie et Polynésie française, mais elles restent plus limitées.</p>
-        <div style="background:rgba(239,118,87,.08);border-left:3px solid var(--coral);border-radius:0 8px 8px 0;padding:10px 14px;">
-          <div style="font-size:11px;font-weight:600;color:var(--coral);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;">La France en Europe</div>
-          <p>En France, l'aquaculture marine est largement dominée par les coquillages — huîtres et moules représentent à elles seules <strong>environ les trois quarts</strong> de la production. La pisciculture marine constitue le deuxième grand secteur, avec un savoir-faire reconnu dans la reproduction et l'alimentation des poissons.</p>
-          <p style="margin-top:8px;">À l'échelle européenne, la France figure parmi les principaux producteurs, juste derrière l'Espagne, et compte parmi les premiers producteurs d'algues — une filière en expansion.</p>
-        </div>
-        <p style="color:#aaa;font-size:11px;font-style:italic;">Il existe de nombreuses autres activités très marginales, comme l'homariculture (homards) ou l'échinoculture (oursins).</p>
-      </div>
-      <p class="src">Source : Agreste — Enquête aquaculture 2024</p>
-      <div style="position:relative;height:140px;margin-top:-10px;pointer-events:none;">
-        <img src="travailleur.png" alt="Travailleur aquacole" style="
-          position:absolute;right:0;bottom:0;
-          height:130px;width:auto;
-          display:block;
-        ">
-      </div>`
-  },
-
-  localisation:{
-    title:"Concentration de l'emploi conchylicole",
-    sub:'ETP (Équivalents Temps Plein) par région — cercles proportionnels, 2024',
-    render:()=>{
-      const pts=[
-        {n:'Normandie–Mer du Nord',etp:1106,x:44, y:16,c:'#4e4a86'},
-        {n:'Bretagne-Nord',        etp:955, x:16, y:27,c:'#ef7657'},
-        {n:'Bretagne-Sud',         etp:716, x:18, y:40,c:'#7e96cf'},
-        {n:'Pays de la Loire',     etp:604, x:26, y:50,c:'#7e96cf'},
-        {n:'Charente-Maritime',    etp:1562,x:27, y:60,c:'#4e4a86'},
-        {n:'Arcachon–Aquitaine',   etp:320, x:26, y:70,c:'#9b94c8'},
-        {n:'Méditerranée',         etp:584, x:70, y:76,c:'#ef7657'},
-      ];
-      const mx=1562,minR=11,maxR=30;
-      return `<div class="loc-wrap">
-        <img src="Carte.png" alt="Carte France" style="opacity:.45;">
-        ${pts.map(p=>{
-          const r=minR+(p.etp/mx)*(maxR-minR);
-          return `
-            <div class="loc-dot" style="left:${p.x}%;top:${p.y}%;width:${r*2}px;height:${r*2}px;background:${p.c}cc;">
-              <span style="font-size:${Math.max(7,r/2.5)}px">${p.etp>999?(p.etp/1000).toFixed(1)+'k':p.etp}</span>
-            </div>
-            <div class="loc-lbl" style="left:${p.x}%;top:calc(${p.y}% + ${r+3}px);">${p.n}</div>`;
-        }).join('')}
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:10px;color:#888;">
-        <div style="width:10px;height:10px;border-radius:50%;background:#4e4a8688;border:1.5px solid #4e4a86;flex-shrink:0"></div>
-        Taille proportionnelle aux ETP — max : 1 562 ETP (Charente-Maritime)
-      </div>
-      <p class="src">Source : Agreste — Enquête aquaculture 2024</p>`;
-    }
+  after:()=>{
+    makeCarousel('vc',["Vue d'ensemble & classement europ\xe9en","Evolution aquaculture 2020\u20132024","Evolution conchyliculture 2020\u20132024","R\xe9partition en valeur par bassin 2024"]);
+    setTimeout(()=>{
+      drawLineChart('chart-aqua',['2020','2021','2022','2023','2024'],[
+        {l:'Coq. & crustac\xe9s',vals:[144011,149437,142267,146384,134889],c:'#7e96cf'},
+        {l:'Poissons marins',vals:[46903,43834,40955,38535,43266],c:'#ef7657'},
+        {l:'Algues marines',vals:[343,333,524,453,724],c:'#2d9e6b'},
+      ],{dashed:{l:'Total',vals:[191257,193604,183746,185372,178879],c:'#4e4a86'}});
+      drawLineChart('chart-conchy',['2020','2021','2022','2023','2024'],[
+        {l:'Hu\xeetres',vals:[80783,80911,81887,90410,81383],c:'#7e96cf'},
+        {l:'Moules',vals:[62219,66321,58067,54531,48775],c:'#ef7657'},
+        {l:'Autres coq.',vals:[1946,2142,2225,1330,4672],c:'#2d9e6b'},
+      ]);
+      drawValeurBassins('chart-valeur');
+    },120);
   }
+},
+production:{
+  title:'R\xe9partition de la production marine',sub:'1 pictogramme = 5 000 t \u2014 2024',
+  render:()=>{
+    const UNIT=5000;
+    const data=[
+      {l:'Hu\xeetres',kt:'81,4',v:81383,pic:'huitre-col.png'},
+      {l:'Moules',kt:'48,8',v:48775,pic:'moule-col.png'},
+      {l:'Salmonid\xe9s',kt:'33,3',v:33255,pic:'salmonide-col.png'},
+      {l:'Poissons mar.',kt:'6,6',v:6619,pic:'poisson-col.png'},
+      {l:'Algues marines',kt:'0,7',v:724,pic:'algue-col.png'},
+    ];
+    return data.map(d=>{
+      const n=Math.max(1,Math.round(d.v/UNIT));
+      const imgs=Array.from({length:n},(_,i)=>{
+        const rem=d.v%UNIT;const op=(i===n-1&&rem>200)?(rem/UNIT).toFixed(2):1;
+        return '<img src="'+d.pic+'" style="height:30px;width:auto;flex-shrink:0;opacity:'+op+';" alt="'+d.l+'">';
+      }).join('');
+      return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div style="width:90px;flex-shrink:0;text-align:right;"><b style="font-size:10px;font-weight:600;color:var(--navy);display:block;">'+d.l+'</b><span style="font-size:9px;color:#aaa;">'+d.kt+' kt</span></div><div style="flex:1;"><div style="display:flex;flex-wrap:wrap;gap:2px;align-items:center;padding:2px 0 4px;">'+imgs+'</div></div></div>';
+    }).join('')+
+    '<div style="font-size:9px;color:#bbb;text-align:right;margin-top:2px;font-style:italic;">1 pictogramme \u2248 5 000 t \u00b7 scroll \u2192</div>'+
+    '<p class="src">Source : Agreste \u2014 Enqu\xeate aquaculture 2024</p>';
+  }
+},
+evolution:{
+  title:'Evolution des volumes 2023 \u2192 2024',sub:'Slopegraph par fili\xe8re marine',
+  render:()=>'<svg id="slope-svg" viewBox="0 0 460 260" style="width:100%;display:block;"></svg><p class="src">Source : Agreste \u2014 Enqu\xeates aquaculture 2023 &amp; 2024</p>',
+  after:()=>draw_slope()
+},
+emploi:{
+  title:'Emploi par fili\xe8re \u2014 Aquaculture marine',sub:'Equivalents Temps Plein (ETP) \u2014 2024',
+  render:()=>'<div class="etp-note"><strong style="color:var(--navy)">ETP</strong> \u2014 Equivalent Temps Plein. Donn\xe9es <strong>aquaculture marine uniquement</strong> : hors pisciculture eau douce, \xe9tangs et cyanobact\xe9ries / spiruline.</div>'+
+    '<svg id="bubble-svg" viewBox="0 0 480 240" style="width:100%;display:block;overflow:visible;margin-bottom:8px;"></svg>'+
+    '<p class="src">Source : Agreste \u2014 Enqu\xeate aquaculture 2024</p>',
+  after:()=>drawBubblePlot()
+},
+localisation:{
+  title:"R\xe9partition g\xe9ographique \u2014 Conchyliculture marine",sub:'Par bassin de production \u2014 2024',
+  render:()=>{
+    const minR=11,maxR=30;
+    function pie(hPct,r){
+      const cx=r,cy=r;
+      if(hPct>=1)return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#7e96cf"/>';
+      if(hPct<=0)return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#4e4a86"/>';
+      const a=(hPct*360-90)*Math.PI/180;
+      const hx=cx+r*Math.cos(a),hy=cy+r*Math.sin(a);
+      const lf=hPct>0.5?1:0;
+      return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#4e4a86"/><path d="M'+cx+','+cy+' L'+cx+','+(cy-r)+' A'+r+','+r+' 0 '+lf+',1 '+hx+','+hy+' Z" fill="#7e96cf"/>';
+    }
+    function makeDots(pts,mx){
+      return pts.map(p=>{
+        const r=minR+(p.etp/mx)*(maxR-minR),d=r*2;
+        return '<div class="loc-dot" style="left:'+p.x+'%;top:'+p.y+'%;width:'+d+'px;height:'+d+'px;background:transparent;border:none;padding:0;" title="'+p.n+'">'+
+          '<svg viewBox="0 0 '+d+' '+d+'" width="'+d+'" height="'+d+'" style="display:block;">'+pie(p.h,r)+'<circle cx="'+r+'" cy="'+r+'" r="'+r+'" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg></div>'+
+          '<div class="loc-lbl" style="left:'+p.x+'%;top:calc('+p.y+'% + '+(r+3)+'px);">'+p.n+'</div>';
+      }).join('');
+    }
+    const PV=[
+      {n:'Normandie\u2013Mer du Nord',etp:1106,h:.70,x:44,y:16},
+      {n:'Bretagne-Nord',etp:955,h:.35,x:16,y:27},
+      {n:'Bretagne-Sud',etp:716,h:.65,x:18,y:40},
+      {n:'Pays de la Loire',etp:604,h:.72,x:26,y:50},
+      {n:'Charente-Maritime',etp:1562,h:.88,x:27,y:60},
+      {n:'Arcachon\u2013Aquitaine',etp:320,h:.95,x:26,y:70},
+      {n:'M\xe9diterran\xe9e',etp:584,h:.90,x:70,y:76},
+    ];
+    const PVL=[
+      {n:'Normandie\u2013Mer du Nord',etp:820,h:.55,x:44,y:16},
+      {n:'Bretagne-Nord',etp:680,h:.30,x:16,y:27},
+      {n:'Bretagne-Sud',etp:510,h:.70,x:18,y:40},
+      {n:'Pays de la Loire',etp:390,h:.75,x:26,y:50},
+      {n:'Charente-Maritime',etp:1400,h:.92,x:27,y:60},
+      {n:'Arcachon\u2013Aquitaine',etp:310,h:.97,x:26,y:70},
+      {n:'M\xe9diterran\xe9e',etp:480,h:.93,x:70,y:76},
+    ];
+    const PE=[
+      {n:'Normandie\u2013Mer du Nord',etp:1106,c:'#4e4a86',x:44,y:16},
+      {n:'Bretagne-Nord',etp:955,c:'#ef7657',x:16,y:27},
+      {n:'Bretagne-Sud',etp:716,c:'#7e96cf',x:18,y:40},
+      {n:'Pays de la Loire',etp:604,c:'#7e96cf',x:26,y:50},
+      {n:'Charente-Maritime',etp:1562,c:'#4e4a86',x:27,y:60},
+      {n:'Arcachon\u2013Aquitaine',etp:320,c:'#9b94c8',x:26,y:70},
+      {n:'M\xe9diterran\xe9e',etp:584,c:'#ef7657',x:70,y:76},
+    ];
+    const etpDots=PE.map(p=>{
+      const r=minR+(p.etp/1562)*(maxR-minR);
+      return '<div class="loc-dot" style="left:'+p.x+'%;top:'+p.y+'%;width:'+(r*2)+'px;height:'+(r*2)+'px;background:'+p.c+'cc;"><span style="font-size:'+Math.max(7,r/2.5)+'px">'+(p.etp>999?(p.etp/1000).toFixed(1)+'k':p.etp)+'</span></div>'+
+        '<div class="loc-lbl" style="left:'+p.x+'%;top:calc('+p.y+'% + '+(r+3)+'px);">'+p.n+'</div>';
+    }).join('');
+    const legend='<div style="display:flex;gap:12px;margin-top:8px;font-size:10px;color:#888;flex-wrap:wrap;"><div style="display:flex;align-items:center;gap:5px;"><div style="width:12px;height:12px;border-radius:50%;background:#7e96cf;"></div>Hu\xeetres</div><div style="display:flex;align-items:center;gap:5px;"><div style="width:12px;height:12px;border-radius:50%;background:#4e4a86;"></div>Moules</div></div>';
+    const LC=['Volume par bassin','Valeur par bassin','Emploi (ETP) par bassin'];
+    return '<div class="carousel-wrap">'+
+    '<div class="carousel-nav"><button class="c-arrow" id="lc-prev">&#8592;</button>'+
+    '<div class="carousel-dots" id="lc-dots">'+LC.map((_,i)=>'<div class="c-dot'+(i===0?' active':'')+'"></div>').join('')+'</div>'+
+    '<button class="c-arrow" id="lc-next">&#8594;</button></div>'+
+    '<div id="lc-lbl" class="carousel-label">'+LC[0]+'</div>'+
+    '<div class="carousel-slides" id="lc-slides">'+
+
+    '<div class="carousel-slide"><div class="loc-wrap"><img src="Carte.png" alt="Carte" style="opacity:.45;">'+makeDots(PV,1562)+'</div>'+
+    legend+'<div style="font-size:9px;color:#999;text-align:right;margin-top:2px;font-style:italic;">Taille \u221d volume (t)</div>'+
+    '<div class="insight-row"><div class="insight" style="background:rgba(126,150,207,.08);border-left:3px solid #7e96cf;"><strong style="color:var(--navy)">Domination hu\xeetre</strong> : Charente-Maritime, Arcachon-Aquitaine et M\xe9diterran\xe9e.</div><div class="insight" style="background:rgba(78,74,134,.08);border-left:3px solid var(--navy);"><strong style="color:var(--navy)">Equilibre hu\xeetre/moule</strong> : Bretagne-Nord et Normandie\u2013Mer du Nord.</div></div>'+
+    '<p class="src">Source : Agreste \u2014 Enqu\xeate aquaculture 2024</p></div>'+
+
+    '<div class="carousel-slide"><div class="loc-wrap"><img src="Carte.png" alt="Carte" style="opacity:.45;">'+makeDots(PVL,1400)+'</div>'+
+    legend+'<div style="font-size:9px;color:#999;text-align:right;margin-top:2px;font-style:italic;">Taille \u221d valeur (M\u20ac estim\xe9s)</div>'+
+    '<div class="insight-row"><div class="insight" style="background:rgba(126,150,207,.08);border-left:3px solid #7e96cf;"><strong style="color:var(--navy)">L\'hu\xeetre, moteur financier</strong> : quasi-totalit\xe9 du CA en Charente-Maritime, Arcachon et M\xe9diterran\xe9e.</div><div class="insight" style="background:rgba(78,74,134,.08);border-left:3px solid var(--navy);"><strong style="color:var(--navy)">Maintien de la moule en valeur</strong> : poids significatif en Bretagne-Nord et Normandie.</div></div>'+
+    '<p class="src">Source : Agreste \u2014 Estimations d\'apr\xe8s proportions visuelles 2024</p></div>'+
+
+    '<div class="carousel-slide"><div class="loc-wrap"><img src="Carte.png" alt="Carte" style="opacity:.45;">'+etpDots+'</div>'+
+    '<div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:10px;color:#888;"><div style="width:10px;height:10px;border-radius:50%;background:#4e4a8688;border:1.5px solid #4e4a86;flex-shrink:0;"></div>Taille proportionnelle aux ETP \u2014 max : 1\u202f562 ETP (Charente-Maritime)</div>'+
+    '<div class="insight-row"><div class="insight" style="background:rgba(78,74,134,.08);border-left:3px solid var(--navy);"><strong style="color:var(--navy)">Premier bassin employeur</strong> : Charente-Maritime (1\u202f562 ETP), puis Normandie\u2013Mer du Nord (1\u202f106 ETP).</div><div class="insight" style="background:rgba(239,118,87,.08);border-left:3px solid var(--coral);"><strong style="color:var(--navy)">Total conchyliculture</strong> : 5\u202f836 ETP \u2014 premier secteur de l\'aquaculture marine.</div></div>'+
+    '<p class="src">Source : Agreste \u2014 Enqu\xeate aquaculture 2024</p></div>'+
+
+    '</div></div>';
+  },
+  after:()=>makeCarousel('lc',['Volume par bassin','Valeur par bassin','Emploi (ETP) par bassin'])
+},
+risques:{
+  title:'Ev\xe9nements exceptionnels 2024',sub:'Profil de risque par r\xe9gion conchylicole',
+  render:()=>{
+    const regions=[
+      {n:'Bretagne-Nord',vals:[21.1,16.7,0,0]},
+      {n:'Normandie',vals:[13.9,12.7,1.7,1.8]},
+      {n:'Bretagne-Sud',vals:[1.7,3.7,1.1,0.3]},
+      {n:'Pays de Loire',vals:[1.2,4.4,4.4,1.0]},
+      {n:'Char.-Maritime',vals:[3.6,3.1,1.3,1.2]},
+      {n:'Arcachon',vals:[4.2,8.9,6.2,16.4]},
+      {n:'M\xe9diterran\xe9e',vals:[10.9,3.1,1.2,3.3]},
+    ];
+    const SHORT=['Pr\xe9d.','Clim.','Virus','Mort.'];
+    const COLS=['#ef7657','#7e96cf','#4e4a86','#9b94c8'];
+    const MX=25,R=36,SZ=104;
+    const ANG=Array.from({length:4},(_,i)=>-Math.PI/2+i*Math.PI/2);
+    function spider(vals){
+      const cx=SZ/2,cy=SZ/2;let h='';
+      [.33,.66,1].forEach(f=>{
+        const pts=ANG.map(a=>(cx+R*f*Math.cos(a))+','+(cy+R*f*Math.sin(a))).join(' ');
+        h+='<polygon points="'+pts+'" fill="none" stroke="rgba(78,74,134,.18)" stroke-width=".6"/>';
+      });
+      ANG.forEach((a,i)=>{
+        h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+R*Math.cos(a))+'" y2="'+(cy+R*Math.sin(a))+'" stroke="rgba(78,74,134,.18)" stroke-width=".6"/>';
+        const lx=cx+(R+10)*Math.cos(a),ly=cy+(R+10)*Math.sin(a);
+        h+='<text x="'+lx+'" y="'+ly+'" text-anchor="middle" dominant-baseline="central" font-size="7" fill="'+COLS[i]+'" font-family="DM Sans,sans-serif" font-weight="500">'+['Pr\xe9d','Clim','Virus','Mort'][i]+'</text>';
+      });
+      const dpts=vals.map((v,i)=>{const r2=Math.min(v/MX,1)*R;return (cx+r2*Math.cos(ANG[i]))+','+(cy+r2*Math.sin(ANG[i]));}).join(' ');
+      h+='<polygon points="'+dpts+'" fill="rgba(239,118,87,.28)" stroke="#ef7657" stroke-width="1.4"/>';
+      vals.forEach((v,i)=>{if(v>0){const r2=Math.min(v/MX,1)*R;h+='<circle cx="'+(cx+r2*Math.cos(ANG[i]))+'" cy="'+(cy+r2*Math.sin(ANG[i]))+'" r="2.2" fill="#ef7657"/>';}});
+      return h;
+    }
+    const cards=regions.map(reg=>{
+      const stats=reg.vals.map((v,i)=>'<div style="display:flex;align-items:center;gap:3px;font-size:8px;"><div style="width:6px;height:6px;border-radius:50%;background:'+COLS[i]+';flex-shrink:0;"></div><span style="color:#888;">'+SHORT[i]+'</span><span style="font-weight:600;color:'+(v>=10?COLS[i]:v>4?'#555':'#aaa')+'">'+(v>0?v.toFixed(1)+'%':'\u2014')+'</span></div>').join('');
+      return '<div style="background:rgba(78,74,134,.05);border-radius:10px;padding:10px 8px 8px;display:flex;flex-direction:column;align-items:center;"><div style="font-size:9.5px;font-weight:600;color:var(--navy);text-align:center;margin-bottom:4px;line-height:1.2;">'+reg.n+'</div><svg viewBox="0 0 '+SZ+' '+SZ+'" width="'+SZ+'" height="'+SZ+'" style="overflow:visible;display:block;">'+spider(reg.vals)+'</svg><div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 4px;margin-top:6px;width:100%;">'+stats+'</div></div>';
+    }).join('');
+    return '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">'+cards+'</div><p class="src">Source : Agreste \u2014 Enqu\xeate aquaculture 2024</p>';
+  }
+},
+apercu:{
+  title:"L'aquaculture marine fran\xe7aise",sub:"Une fili\xe8re diverse, du littoral \xe0 l'assiette",
+  render:()=>'<div style="display:flex;flex-direction:column;gap:14px;line-height:1.65;font-size:13px;color:#444;">'+
+    '<p>L\'aquaculture marine d\xe9signe l\'ensemble des activit\xe9s d\'\xe9levage dans l\'eau sal\xe9e.</p>'+
+    '<div style="background:rgba(126,150,207,.08);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;"><div style="font-size:11px;font-weight:600;color:var(--navy);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;">Les grandes fili\xe8res marines</div>'+
+    '<p>La <strong style="color:var(--navy)">pisciculture marine</strong> (bars, daurades, salmonid\xe9s\u2026), <strong style="color:var(--navy)">l\'algoculture</strong> (algues marines), et la <strong style="color:var(--navy)">conchyliculture</strong> (hu\xeetres, moules).</p></div>'+
+    '<div style="background:rgba(239,118,87,.08);border-left:3px solid var(--coral);border-radius:0 8px 8px 0;padding:10px 14px;"><div style="font-size:11px;font-weight:600;color:var(--coral);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;">La France en Europe</div>'+
+    '<p>Les coquillages repr\xe9sentent environ les <strong>trois quarts</strong> de la production. La France figure parmi les principaux producteurs europ\xe9ens, juste derri\xe8re l\'Espagne.</p></div>'+
+    '</div>'+
+    '<p class="src">Source : Agreste \u2014 Enqu\xeate aquaculture 2024</p>'+
+    '<div style="position:relative;height:140px;margin-top:-10px;pointer-events:none;"><img src="travailleur.png" alt="Travailleur aquacole" style="position:absolute;right:0;bottom:0;height:130px;width:auto;display:block;"></div>'
+},
 };
 
-/* ── ANIMATION KPIs AU CHARGEMENT ── */
-function animateCounter(el, target, duration, formatter){
-  const start=performance.now();
-  function step(now){
-    const p=Math.min((now-start)/duration,1);
-    const ease=1-Math.pow(1-p,3); // ease-out cubic
-    el.textContent=formatter(Math.round(ease*target));
-    if(p<1) requestAnimationFrame(step);
-    else {
-      el.textContent=formatter(target);
-      if(p>=1){ /* reveal handled by load listener */ }
-    }
+function drawLineChart(id,years,series,opts){
+  const svg=document.getElementById(id);if(!svg)return;
+  const W=520,H=200,pad={l:18,r:18,t:24,b:24};
+  const F="'DM Sans',sans-serif";
+  const allV=series.flatMap(s=>s.vals);
+  if(opts&&opts.dashed)allV.push(...opts.dashed.vals);
+  const mx=Math.max(...allV)*1.1;
+  const xP=i=>pad.l+(i/(years.length-1))*(W-pad.l-pad.r);
+  const yP=v=>pad.t+(H-pad.t-pad.b)*(1-v/mx);
+  let h='';
+  [.25,.5,.75,1].forEach(f=>{
+    const y=yP(mx*f);
+    h+='<line x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'" stroke="rgba(78,74,134,.07)" stroke-width="1"/>';
+    h+='<text x="'+(pad.l-2)+'" y="'+(y+3)+'" font-size="7.5" fill="#ccc" text-anchor="end" font-family="'+F+'">'+Math.round(mx*f/1000)+'k</text>';
+  });
+  years.forEach((yr,i)=>{
+    h+='<text x="'+xP(i)+'" y="'+(H-4)+'" font-size="9" fill="#aaa" text-anchor="middle" font-family="'+F+'">'+yr+'</text>';
+  });
+  if(opts&&opts.dashed){
+    const d=opts.dashed;
+    const pts=d.vals.map((v,i)=>xP(i)+','+yP(v)).join(' ');
+    h+='<polyline points="'+pts+'" fill="none" stroke="'+d.c+'" stroke-width="1.6" stroke-dasharray="5,3" stroke-linecap="round" stroke-linejoin="round" opacity=".65"/>';
+    [0,d.vals.length-1].forEach(i=>{
+      const v=d.vals[i];
+      h+='<text x="'+(xP(i)+(i===0?7:-7))+'" y="'+(yP(v)-6)+'" font-size="8" fill="'+d.c+'" text-anchor="'+(i===0?'start':'end')+'" font-family="'+F+'" font-weight="500">'+(v/1000).toFixed(0)+'k</text>';
+    });
   }
-  requestAnimationFrame(step);
+  series.forEach(s=>{
+    const pts=s.vals.map((v,i)=>xP(i)+','+yP(v)).join(' ');
+    h+='<polyline points="'+pts+'" fill="none" stroke="'+s.c+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>';
+    s.vals.forEach((v,i)=>{
+      h+='<circle cx="'+xP(i)+'" cy="'+yP(v)+'" r="2.8" fill="'+s.c+'"/>';
+      if(i===0||i===s.vals.length-1){
+        const anc=i===0?'start':'end';const dx=i===0?7:-7;
+        h+='<text x="'+(xP(i)+dx)+'" y="'+(yP(v)-6)+'" font-size="8" fill="'+s.c+'" text-anchor="'+anc+'" font-family="'+F+'" font-weight="500">'+(v/1000).toFixed(0)+'k</text>';
+      }
+    });
+  });
+  svg.innerHTML=h;
 }
 
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    animateCounter(
-      document.getElementById('kpi-tonnes'),
-      178879, 1800,
-      v=>v.toLocaleString('fr')+' t'
-    );
-    animateCounter(
-      document.getElementById('kpi-euros'),
-      870, 1800,
-      v=>v+' M€'
-    );
-  }, 400);
+function drawValeurBassins(id){
+  const svg=document.getElementById(id);if(!svg)return;
+  const W=520,H=240,padL=148,padR=50,padT=16;
+  const F="'DM Sans',sans-serif";
+  const data=[
+    {n:'Charente-Maritime',h:240,m:18},
+    {n:'Normandie\u2013Mer du N.',h:98,m:72},
+    {n:'Bretagne-Nord',h:52,m:85},
+    {n:'M\xe9diterran\xe9e',h:74,m:6},
+    {n:'Bretagne-Sud',h:68,m:22},
+    {n:'Arcachon\u2013Aquitaine',h:52,m:2},
+    {n:'Pays de la Loire',h:38,m:12},
+  ];
+  const barH=22,gap=8;
+  const maxV=Math.max(...data.map(d=>d.h+d.m));
+  const scW=v=>(v/maxV)*(W-padL-padR);
+  let h='';
+  data.forEach((d,i)=>{
+    const y=padT+i*(barH+gap);
+    const wH=scW(d.h),wM=scW(d.m);
+    h+='<text x="'+(padL-8)+'" y="'+(y+barH/2+4)+'" font-size="9.5" fill="#555" text-anchor="end" font-family="'+F+'">'+d.n+'</text>';
+    h+='<rect x="'+padL+'" y="'+y+'" width="'+wH+'" height="'+barH+'" fill="#7e96cf" rx="3" opacity=".9"/>';
+    h+='<rect x="'+(padL+wH)+'" y="'+y+'" width="'+wM+'" height="'+barH+'" fill="#4e4a86" rx="3" opacity=".85"/>';
+    h+='<text x="'+(padL+wH+wM+6)+'" y="'+(y+barH/2+4)+'" font-size="8.5" fill="#888" font-family="'+F+'">'+(d.h+d.m)+' M\u20ac</text>';
+    if(wH>20)h+='<text x="'+(padL+wH/2)+'" y="'+(y+barH/2+4)+'" font-size="8" fill="white" text-anchor="middle" font-family="'+F+'" font-weight="600">'+d.h+'</text>';
+    if(wM>20)h+='<text x="'+(padL+wH+wM/2)+'" y="'+(y+barH/2+4)+'" font-size="8" fill="white" text-anchor="middle" font-family="'+F+'" font-weight="600">'+d.m+'</text>';
+  });
+  const legY=H-12;
+  h+='<image href="huitre-col.png" x="'+padL+'" y="'+(legY-10)+'" width="20" height="20"/><text x="'+(padL+24)+'" y="'+(legY+4)+'" font-size="8.5" fill="#888" font-family="'+F+'">Hu\xeetres</text>';
+  h+='<image href="moule-col.png" x="'+(padL+72)+'" y="'+(legY-10)+'" width="20" height="20"/><text x="'+(padL+96)+'" y="'+(legY+4)+'" font-size="8.5" fill="#888" font-family="'+F+'">Moules</text>';
+  h+='<text x="'+(W-padR)+'" y="'+(legY+4)+'" font-size="7.5" fill="#bbb" text-anchor="end" font-family="'+F+'" font-style="italic">Valeurs estim\xe9es</text>';
+  svg.innerHTML=h;
+}
 
-  // "en 2024" + bouton Aperçu apparaissent après l'animation
-  setTimeout(()=>{
-    const yr = document.getElementById('kpi-year');
-    if(yr) yr.style.opacity='1';
-  }, 2400);
-
-  setTimeout(()=>{
-    const b = document.getElementById('btn-apercu');
-    if(b){
-      b.style.opacity='1';
-      b.style.pointerEvents='all';
-      b.addEventListener('click', ()=>open_modal('apercu'));
-    }
-  }, 3000);
-});
+function drawBubblePlot(){
+  const svg=document.getElementById('bubble-svg');if(!svg)return;
+  const W=480,H=240,F="'DM Sans',sans-serif";
+  const data=[
+    {n:'Conchyliculture',etp:5836,ent:2320,f:26.5,c:'#4e4a86'},
+    {n:'Pisciculture marine',etp:390,ent:32,f:16.4,c:'#ef7657'},
+    {n:'Algues marines',etp:202,ent:248,f:38.2,c:'#2d9e6b'},
+  ];
+  const maxEtp=5836,maxR=72,minR=18;
+  const pos=[{cx:118,cy:108},{cx:290,cy:115},{cx:415,cy:115}];
+  let h='<text x="'+W/2+'" y="13" font-size="8.5" fill="#ddd" text-anchor="middle" font-family="'+F+'" font-style="italic">Taille proportionnelle aux ETP \u2014 Aquaculture marine uniquement</text>';
+  data.forEach((d,i)=>{
+    const r=minR+(d.etp/maxEtp)*(maxR-minR);
+    const {cx,cy}=pos[i];
+    h+='<circle cx="'+(cx+2)+'" cy="'+(cy+3)+'" r="'+r+'" fill="rgba(0,0,0,.07)"/>';
+    h+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+d.c+'" opacity=".88"/>';
+    h+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r-3)+'" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1.5"/>';
+    const etpTxt=d.etp>999?(d.etp/1000).toFixed(1)+'k':d.etp;
+    const fSz=Math.max(10,r/3.2);
+    h+='<text x="'+cx+'" y="'+cy+'" font-size="'+fSz+'" fill="white" text-anchor="middle" dominant-baseline="middle" font-family="'+F+'" font-weight="700">'+etpTxt+'</text>';
+    h+='<text x="'+cx+'" y="'+(cy+fSz/1.2)+'" font-size="8" fill="rgba(255,255,255,.7)" text-anchor="middle" font-family="'+F+'">ETP</text>';
+    h+='<text x="'+cx+'" y="'+(cy+r+14)+'" font-size="9.5" fill="'+d.c+'" text-anchor="middle" font-family="'+F+'" font-weight="600">'+d.n+'</text>';
+    h+='<text x="'+cx+'" y="'+(cy+r+26)+'" font-size="8.5" fill="#aaa" text-anchor="middle" font-family="'+F+'">'+d.ent+' entreprises</text>';
+    h+='<text x="'+cx+'" y="'+(cy+r+38)+'" font-size="8" fill="#ef7657" text-anchor="middle" font-family="'+F+'">'+d.f+'% de femmes</text>';
+  });
+  const total=data.reduce((s,d)=>s+d.etp,0);
+  h+='<text x="'+W/2+'" y="'+(H-8)+'" font-size="8.5" fill="#bbb" text-anchor="middle" font-family="'+F+'">Total aquaculture marine : '+total.toLocaleString('fr')+' ETP</text>';
+  svg.innerHTML=h;
+}
 
 function draw_slope(){
-  const svg=document.getElementById('slope-svg');
-  if(!svg) return;
+  const svg=document.getElementById('slope-svg');if(!svg)return;
   const W=460,H=260,pad={l:120,r:110,t:32,b:16};
   const x0=pad.l,x1=W-pad.r;
   const data=[
-    {l:'Huîtres',      v23:90410,v24:81383,c:'#7e96cf'},
-    {l:'Moules',       v23:54531,v24:48775,c:'#4e4a86'},
-    {l:'Salmonidés',   v23:29313,v24:33246,c:'#ef7657'},
-    {l:'Poissons mar.',v23:5807, v24:6509, c:'#9b94c8'},
-    {l:'Algues',       v23:453,  v24:722,  c:'#2d9e6b'},
+    {l:'Hu\xeetres',v23:90410,v24:81383,c:'#7e96cf'},
+    {l:'Moules',v23:54531,v24:48775,c:'#4e4a86'},
+    {l:'Salmonid\xe9s',v23:29313,v24:33246,c:'#ef7657'},
+    {l:'Poissons mar.',v23:5807,v24:6509,c:'#9b94c8'},
+    {l:'Algues marines',v23:453,v24:724,c:'#2d9e6b'},
   ];
   const all=data.flatMap(d=>[d.v23,d.v24]);
   const lMn=Math.log(Math.min(...all)),lMx=Math.log(Math.max(...all));
   const scY=v=>pad.t+(H-pad.t-pad.b)*(1-(Math.log(v)-lMn)/(lMx-lMn));
   const F="'DM Sans',sans-serif";
-  let h=`
-    <line x1="${x0}" y1="${pad.t}" x2="${x0}" y2="${H-pad.b}" stroke="#eee" stroke-width="1"/>
-    <line x1="${x1}" y1="${pad.t}" x2="${x1}" y2="${H-pad.b}" stroke="#eee" stroke-width="1"/>
-    <text x="${x0}" y="${pad.t-10}" font-size="11" fill="#ccc" text-anchor="middle" font-family="${F}">2023</text>
-    <text x="${x1}" y="${pad.t-10}" font-size="11" fill="#ccc" text-anchor="middle" font-family="${F}">2024</text>`;
+  let h='<line x1="'+x0+'" y1="'+pad.t+'" x2="'+x0+'" y2="'+(H-pad.b)+'" stroke="#eee" stroke-width="1"/>'+
+    '<line x1="'+x1+'" y1="'+pad.t+'" x2="'+x1+'" y2="'+(H-pad.b)+'" stroke="#eee" stroke-width="1"/>'+
+    '<text x="'+x0+'" y="'+(pad.t-10)+'" font-size="11" fill="#ccc" text-anchor="middle" font-family="'+F+'">2023</text>'+
+    '<text x="'+x1+'" y="'+(pad.t-10)+'" font-size="11" fill="#ccc" text-anchor="middle" font-family="'+F+'">2024</text>';
   data.forEach(d=>{
     const y0=scY(d.v23),y1=scY(d.v24);
-    const pct=((d.v24-d.v23)/d.v23*100);
-    const sign=pct>=0?'+':'';
-    const pc=pct>=0?'#ef7657':'#7e96cf';
-    h+=`
-      <line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="${d.c}" stroke-width="2" stroke-linecap="round" opacity=".9"/>
-      <circle cx="${x0}" cy="${y0}" r="3.5" fill="${d.c}"/>
-      <circle cx="${x1}" cy="${y1}" r="3.5" fill="${d.c}"/>
-      <text x="${x0-9}" y="${y0-5}" font-size="10" fill="${d.c}" text-anchor="end" font-family="${F}" font-weight="500">${d.l}</text>
-      <text x="${x0-9}" y="${y0+8}" font-size="9" fill="#ccc" text-anchor="end" font-family="${F}">${(d.v23/1000).toFixed(0)} kt</text>
-      <text x="${x1+9}" y="${y1-5}" font-size="11" fill="${pc}" text-anchor="start" font-family="${F}" font-weight="600">${sign}${pct.toFixed(0)}%</text>
-      <text x="${x1+9}" y="${y1+8}" font-size="9" fill="#ccc" text-anchor="start" font-family="${F}">${(d.v24/1000).toFixed(0)} kt</text>`;
+    const pct=((d.v24-d.v23)/d.v23*100);const sign=pct>=0?'+':'';const pc=pct>=0?'#ef7657':'#7e96cf';
+    h+='<line x1="'+x0+'" y1="'+y0+'" x2="'+x1+'" y2="'+y1+'" stroke="'+d.c+'" stroke-width="2" stroke-linecap="round" opacity=".9"/>'+
+      '<circle cx="'+x0+'" cy="'+y0+'" r="3.5" fill="'+d.c+'"/>'+
+      '<circle cx="'+x1+'" cy="'+y1+'" r="3.5" fill="'+d.c+'"/>'+
+      '<text x="'+(x0-9)+'" y="'+(y0-5)+'" font-size="10" fill="'+d.c+'" text-anchor="end" font-family="'+F+'" font-weight="500">'+d.l+'</text>'+
+      '<text x="'+(x0-9)+'" y="'+(y0+8)+'" font-size="9" fill="#ccc" text-anchor="end" font-family="'+F+'">'+(d.v23/1000).toFixed(0)+' kt</text>'+
+      '<text x="'+(x1+9)+'" y="'+(y1-5)+'" font-size="11" fill="'+pc+'" text-anchor="start" font-family="'+F+'" font-weight="600">'+sign+pct.toFixed(0)+'%</text>'+
+      '<text x="'+(x1+9)+'" y="'+(y1+8)+'" font-size="9" fill="#ccc" text-anchor="start" font-family="'+F+'">'+(d.v24/1000).toFixed(0)+' kt</text>';
   });
   svg.innerHTML=h;
 }
 
-function openEsri() {
-  var overlay = document.getElementById('esri-overlay');
-  var iframe  = document.getElementById('esri-iframe');
-  if (!iframe.src || iframe.src === window.location.href) {
-    iframe.src = 'https://geolittoral-data.cerema.fr/portal/apps/instant/sidebar/index.html?appid=77eda03d92904cd1a81a2b48e92a412b';
+function animateCounter(el,target,duration,formatter){
+  const start=performance.now();
+  function step(now){
+    const p=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=formatter(Math.round(ease*target));
+    if(p<1)requestAnimationFrame(step);else el.textContent=formatter(target);
   }
-  overlay.style.display = 'flex';
-  setTimeout(function(){ overlay.style.opacity = '1'; }, 10);
+  requestAnimationFrame(step);
 }
-function closeEsri() {
-  var overlay = document.getElementById('esri-overlay');
-  overlay.style.opacity = '0';
-  setTimeout(function(){ overlay.style.display = 'none'; }, 300);
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    animateCounter(document.getElementById('kpi-tonnes'),178879,1800,v=>v.toLocaleString('fr')+' t');
+    animateCounter(document.getElementById('kpi-euros'),870,1800,v=>v+' M\u20ac');
+  },400);
+  setTimeout(()=>{const yr=document.getElementById('kpi-year');if(yr)yr.style.opacity='1';},2400);
+  setTimeout(()=>{
+    const b=document.getElementById('btn-apercu');
+    if(b){b.style.opacity='1';b.style.pointerEvents='all';b.addEventListener('click',()=>open_modal('apercu'));}
+  },3000);
+});
+function openEsri(){
+  var o=document.getElementById('esri-overlay'),f=document.getElementById('esri-iframe');
+  if(!f.src||f.src===window.location.href)f.src='https://geolittoral-data.cerema.fr/portal/apps/instant/sidebar/index.html?appid=77eda03d92904cd1a81a2b48e92a412b';
+  o.style.display='flex';setTimeout(function(){o.style.opacity='1';},10);
 }
-document.addEventListener('DOMContentLoaded', function() {
-  var overlay = document.getElementById('esri-overlay');
-  var closeBtn = document.getElementById('esri-close-btn');
-  if (overlay) overlay.addEventListener('click', function(e){ if (e.target === this) closeEsri(); });
-  if (closeBtn) closeBtn.addEventListener('click', closeEsri);
+function closeEsri(){
+  var o=document.getElementById('esri-overlay');o.style.opacity='0';setTimeout(function(){o.style.display='none';},300);
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var o=document.getElementById('esri-overlay'),c=document.getElementById('esri-close-btn');
+  if(o)o.addEventListener('click',function(e){if(e.target===this)closeEsri();});
+  if(c)c.addEventListener('click',closeEsri);
 });
 </script>
-
 <div id="esri-overlay" style="position:fixed;inset:0;background:rgba(10,20,50,.75);display:none;align-items:center;justify-content:center;z-index:500;opacity:0;transition:opacity .3s ease;">
   <div style="position:relative;width:92%;max-width:1100px;height:82vh;border-radius:16px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.6);">
-    <button onclick="closeEsri()" style="position:absolute;top:10px;right:12px;z-index:10;background:rgba(78,74,134,.9);border:none;color:white;font-size:1.2rem;cursor:pointer;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>
+    <button id="esri-close-btn" style="position:absolute;top:10px;right:12px;z-index:10;background:rgba(78,74,134,.9);border:none;color:white;font-size:1.2rem;cursor:pointer;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>
     <iframe id="esri-iframe" src="" width="100%" height="100%" frameborder="0" style="border:0;display:block;" allowfullscreen></iframe>
   </div>
 </div>
